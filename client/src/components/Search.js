@@ -25,30 +25,32 @@ class Search extends React.Component {
     <div class="container">
       {/* <h1 class="header center pink-text text-lighten-3">Hey!</h1> */}
       <div class="row center">
-        <h5 class="header col s12 light grey-text text-lighten-1">let's find that obscure sorrow</h5>
+        <h5 class="header col s12 light grey-text text-lighten-1">let's answer a few questions</h5>
       </div>
     </div>
   </div>
     <div class="container">
   <div class="row">
-    <div class="col s12">
-      <div class="row">
-        <div class="input-field col s12">
+  
         <form onSubmit={this.handleSubmit}>
-          <i class="material-icons prefix">search</i>
-        
-          <input type="submit" value="Submit" value={this.state.value} onChange={this.handleChange} type="text" id="autocomplete-input" class="autocomplete"/>
-          <label for="autocomplete-input">In one word, how do you feel?</label>
+          {/* <i class="material-icons prefix">search</i> */}
+          <div class="row">
+        <div class="input-field col s12">
+          <input id="password" type="password" class="validate"/>
+          <label for="password">Password</label>
+        </div>
+      </div>
+          {/* <input type="submit" value="Submit" value={this.state.value} onChange={this.handleChange} type="text" id="autocomplete-input" class="autocomplete"/>
+          <label for="autocomplete-input">In one word, how do you feel?</label> */}
           </form>
         </div>
       </div>
-    </div>
-  </div>
-  </div>
+  
+
   
   <button onClick={this.handleSubmit} className="btn waves-effect waves-light">
       <i class="material-icons left">thumb_up</i>
-      Find Emotion  
+      Find Friend  
   </button>
             </div>
 
