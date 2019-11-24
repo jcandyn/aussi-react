@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import './App.css';
 import 'firebase/auth';
+import Users from '../src/components/Users'
 import Home from '../src/components/Home'
 
 class App extends React.Component {
@@ -54,9 +55,6 @@ function About() {
   return <h2>About</h2>;
 }
 
-function Users() {
-  return <h2>Users</h2>;
-}
   }
 }
 

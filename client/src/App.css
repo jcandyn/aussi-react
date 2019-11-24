@@ -173,7 +173,7 @@ background-size: 100% 10px;
 
 .sign-out {
   position: absolute;
-  right: 20px;
+  /* right: 20px; */
   top: 15px;
 }
 
@@ -200,4 +200,10 @@ background-size: 100% 10px;
 
 .input-field {
   width: 800px !important;
+}
+
+.profile-image {
+  width: 120px;
+  height: auto;
+  border-radius: 50%;
 }

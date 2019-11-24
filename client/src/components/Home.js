@@ -4,18 +4,30 @@ import withFirebaseAuth from 'react-with-firebase-auth'
 import * as firebase from 'firebase';
 import 'firebase/auth';
 import firebaseConfig from '../firebaseConfig';
+import Firebase from "../Firebase"
 import Banner from './Banner'
 import Search from './Search'
+import Profile from './Profile'
 import Book from './Book'
 
-const firebaseApp = firebase.initializeApp(firebaseConfig);
-const firebaseAppAuth = firebaseApp.auth();
+
+const firebaseAppAuth = Firebase.auth();
 const providers = {
   googleProvider: new firebase.auth.GoogleAuthProvider(),
 };
 var database = firebase.database();
 
 class Home extends React.Component {
+constructor(props) {
+    super(props);
+    this.state = {
+        name: "hello", 
+        email: "",
+        profile_picture: "",
+        userId: ""
+};
+}
+    
   
     savingUsers = (userData) => {
 
@@ -25,12 +37,23 @@ class Home extends React.Component {
             profile_picture : userData.imageUrl
           });
 
+
       }
   
+updateState(userData) {
+    console.log('wtf')
+    this.setState({
+        name: userData.name,
+        email: userData.email,
+        profile_picture: userData.imageUrl,
+        userId: userData.userId
+    })
+}
+
+
     realSignIn = () => {
       this.props.signInWithGoogle().then((res) => {
         console.log(res)
-
        
         const userData = {
             userId : res.additionalUserInfo.profile.id,
@@ -39,6 +62,9 @@ class Home extends React.Component {
           imageUrl: res.additionalUserInfo.profile.picture
         }
         console.log(userData)
+        this.updateState(userData)
+       
+        
   
         if (res.additionalUserInfo.isNewUser === true) {
           this.savingUsers(userData)
@@ -62,6 +88,7 @@ class Home extends React.Component {
             <br/>
             <br/>
             <p className="pink-text text-lighten-3">Hey, {user.displayName} !</p>
+            <img src={user.photoURL} className="profile-image"/>
             </div>
             : 
             <div>
@@ -74,7 +101,8 @@ class Home extends React.Component {
             ? 
             <div>
               <button onClick={signOut} className="sign-out blue-grey darken-4 waves-effect waves-light btn btn-small"><i class="material-icons left">power_settings_new</i>Sign Out</button>
-            <Search/>
+            {/* <Search/> */}
+            {/* <Profile name={this.state.name}/> */}
             {/* <Book name={user.displayName}/> */}
             
               </div>
