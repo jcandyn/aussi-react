@@ -79,7 +79,6 @@ class Search extends React.Component {
           {/* <i class="material-icons prefix">search</i> */}
           <div class="row">
           <div class="row">
-    <form class="col s12">
       <div class="row">
         <div class="input-field">
           <i class="material-icons prefix">mode_edit</i>
@@ -109,7 +108,6 @@ class Search extends React.Component {
   </div>
   </div>
       </div>
-    </form>
   </div>
       </div>
           </form>

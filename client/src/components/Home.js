@@ -1,7 +1,7 @@
 import React from "react";
 import '../App.css';
 import withFirebaseAuth from 'react-with-firebase-auth'
-import * as firebase from 'firebase/app';
+import * as firebase from 'firebase';
 import 'firebase/auth';
 import firebaseConfig from '../firebaseConfig';
 import Banner from './Banner'
@@ -13,21 +13,30 @@ const firebaseAppAuth = firebaseApp.auth();
 const providers = {
   googleProvider: new firebase.auth.GoogleAuthProvider(),
 };
+var database = firebase.database();
 
 class Home extends React.Component {
   
     savingUsers = (userData) => {
-      alert(userData.email).then(() => {
-        console.log("success")
-      })
-    }
+
+        database.ref('users/' + userData.userId).set({
+            username: userData.name,
+            email: userData.email,
+            profile_picture : userData.imageUrl
+          });
+
+      }
   
     realSignIn = () => {
       this.props.signInWithGoogle().then((res) => {
         console.log(res)
-        const email = res.additionalUserInfo.profile.email
+
+       
         const userData = {
-          email: email
+            userId : res.additionalUserInfo.profile.id,
+        name: res.additionalUserInfo.profile.name,
+          email: res.additionalUserInfo.profile.email,
+          imageUrl: res.additionalUserInfo.profile.picture
         }
         console.log(userData)
   
@@ -75,7 +84,9 @@ class Home extends React.Component {
     </div>
     )
       }
-  }
+    }
+  
+
   
   export default withFirebaseAuth({
     providers,
