@@ -29,12 +29,15 @@
   "homepage": "https://github.com/jcandyn/aussi-react#readme",
   "dependencies": {
     "axios": "^0.19.0",
+    "bootstrap": "^4.3.1",
     "express": "^4.17.1",
     "firebase": "^7.4.0",
     "if-env": "^1.0.4",
     "jquery": "^3.4.1",
     "materialize-css": "^1.0.0-rc.2",
     "mongoose": "^5.7.11",
+    "react-bootstrap": "^1.0.0-beta.16",
+    "react-simple-card": "^2.0.2",
     "react-with-firebase-auth": "^1.1.0"
   }
 }

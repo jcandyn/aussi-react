@@ -2,7 +2,7 @@ import React from 'react'
 import * as firebase from 'firebase';
 import firebaseConfig from '../firebaseConfig'
 import Firebase from "../Firebase"
-import UserCard from "../components/UserCard"
+import UserCard from "./UserCard"
 
 var database = Firebase.database();
 
