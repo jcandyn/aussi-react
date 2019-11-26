@@ -20,21 +20,24 @@ class Search extends React.Component {
         M.AutoInit();
     }
 
-    getLocation = (e) => {
-     e.preventDefault()
+  //   showPosition = (position) => {
+  //     const location = "Latitude: " + position.coords.latitude +
+  //     "<br>Longitude: " + position.coords.longitude;
+  //     console.log(location)
+  //     database.ref('users/' + this.props.userId).update({
+  //       "location" : location
+  //     });
+  //    }
 
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(showPosition);
-  } else {
-    alert("Geolocation is not supported by this browser.");
-  }
+  //   getLocation = (e) => {
+  //    e.preventDefault()
 
-function showPosition(position) {
-  const location = "Latitude: " + position.coords.latitude +
-  "<br>Longitude: " + position.coords.longitude;
-  console.log(location)
-}
-    }
+  // if (navigator.geolocation) {
+  //   navigator.geolocation.getCurrentPosition(this.showPosition);
+  // } else {
+  //   alert("Geolocation is not supported by this browser.");
+  // }
+  //   }
 
     handleMultiple(e) {
       var options = e.target.options;
@@ -73,12 +76,14 @@ function showPosition(position) {
         alert("it's updating")
         database.ref('users/' + this.props.userId).update({
           "bio": this.state.bio,
-          "occupation": this.state.occupation
+          "occupation": this.state.occupation,
+          "location": this.state.location
         });
 
         this.setState({
           bio: "",
-          occupation: ""
+          occupation: "",
+          location: ""
         })
       }
       
@@ -114,11 +119,12 @@ function showPosition(position) {
         </div>
         </div>
         <div class="row">
-        {/* <div class="input-field">
+        <div class="input-field">
           <i class="material-icons prefix">edit_location</i>
-          <input type="text" value={this.state.occupation} onChange={this.handleChange} id="icon_prefix"  name="occupation" />
+          <input type="text" value={this.state.location} onChange={this.handleChange} id="icon_prefix"  name="location" />
           <label for="icon_prefix">Where do you live?</label>
-        </div> */}
+          <span class="helper-text" data-error="wrong" data-success="right">Please write city, state, and country. For example, Philadelphia, PA USA</span>
+        </div>
         </div>
         <div class="row">
         <i class="material-icons prefix">local_pizza</i>
@@ -134,9 +140,9 @@ function showPosition(position) {
       <option value="Outdoors/Hiking/Camping">Outdoors/Hiking/Camping</option>
     </select>
     <label>Hobbies</label>
-     <button onClick={this.getLocation} className="btn">
+     {/* <button onClick={this.getLocation} className="btn">
      <i className="material-icons right">edit_location</i>
-    What's your location?</button>
+    What's your location?</button> */}
   </div>
   </div>
       </div>

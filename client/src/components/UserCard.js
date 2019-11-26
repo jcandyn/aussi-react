@@ -15,6 +15,7 @@ class UserCard extends React.Component {
           <CardBody>
             <h4><em>{this.props.data.username}</em></h4>
             <p>{this.props.data.bio}</p>
+            <p>{this.props.data.location}</p>
             <p><strong>{this.props.data.occupation}</strong></p>
           </CardBody>
           <CardFooter>
