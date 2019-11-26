@@ -16,6 +16,8 @@ class UserCard extends React.Component {
             <h4><em>{this.props.data.username}</em></h4>
             <p>{this.props.data.bio}</p>
             <p>{this.props.data.location}</p>
+            {/* {this.props.data.hobbies.map(item => <p>Hobbies: {item}</p>)} */}
+        <p>{this.props.data.hobbies}</p>
             <p><strong>{this.props.data.occupation}</strong></p>
           </CardBody>
           <CardFooter>

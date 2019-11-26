@@ -13,6 +13,7 @@ class Search extends React.Component {
         this.state = {value: ''};
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleMultiple = this.handleMultiple.bind(this);
       }
       
       componentDidMount = () => {
@@ -47,7 +48,9 @@ class Search extends React.Component {
           value.push(options[i].value);
         }
       }
-      // alert(value);
+      database.ref('users/' + this.props.userId).update({
+       "hobbies" : value
+      });
     }
     
       handleChange(event) {
@@ -62,12 +65,10 @@ class Search extends React.Component {
       handleSubmit = (event) => {
         const answer = {
           bio : this.state.bio,
-          occupation: this.state.occupation
-          // hobbies: this.state.hobbies
+          occupation: this.state.occupation,
+         location: this.state.location
         }
-        alert(answer.bio + " " + answer.occupation);
         event.preventDefault();
-      
         this.updateUserObject()
       }
 
