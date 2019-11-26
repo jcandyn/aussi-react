@@ -230,7 +230,7 @@ class Book extends React.Component {
   <div id="pages">
     <section>
       <div>
-      <h5 className="name pink-text text-darken-1">Hey,&nbsp; {this.props.name} !</h5>
+      <h5 className="name pink-text text-darken-1">Hey,&nbsp; {this.props.username} !</h5>
         <h2>History</h2>
         <p>Canvas was initially introduced by Apple for use inside their own Mac OS X WebKit component, powering applications like Dashboard widgets and the Safari browser. Later, it was adopted by Gecko browsers and Opera and standardized by the WHATWG
           on new proposed specifications for next generation web technologies.</p>

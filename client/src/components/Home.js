@@ -21,10 +21,13 @@ class Home extends React.Component {
 constructor(props) {
     super(props);
     this.state = {
-      userId: ""
+      userId: "",
+      childData: ""
 };
 }
-    
+    componentDidMount() {
+      this.retrieve()
+    }
   
     savingUsers = (userData) => {
 
@@ -35,30 +38,37 @@ constructor(props) {
             userId: userData.userId
           });
       }
-  
-updateState(userData) {
-    console.log('wtf')
+
+      retrieve = () => {
+        let childData;
+        var leadsRef = database.ref('users/' + this.state.userId);
+        leadsRef.on('value', snapshot => {
+            childData = snapshot.val();
+            this.setState({
+                childData: childData
+            })
+        });
+     }
+
+ 
+updateState = (userData) => {
     this.setState({
-       userId: userData.userId
+       userId: userData.userId,
     })
 }
 
 
     realSignIn = () => {
       this.props.signInWithGoogle().then((res) => {
-        console.log(res)
-       
         const userData = {
             userId : res.user.uid,
         name: res.additionalUserInfo.profile.name,
           email: res.additionalUserInfo.profile.email,
           imageUrl: res.additionalUserInfo.profile.picture
         }
-        console.log(userData)
+     
         this.updateState(userData)
-       
-        
-  
+      
         if (res.additionalUserInfo.isNewUser === true) {
           this.savingUsers(userData)
         }
@@ -95,7 +105,7 @@ updateState(userData) {
             ? 
             <div>
               <button onClick={signOut} className="sign-out blue-grey darken-4 waves-effect waves-light btn btn-small"><i class="material-icons left">power_settings_new</i>Sign Out</button>
-            <Search userId={user.uid}/>
+            {this.state.childData.isFormFilledOut ? <Search userId={user.uid}/> : <Book username={user.displayName}/>}
             {/* <Profile name={this.state.name}/> */}
             {/* <Book name={user.displayName}/> */}
             

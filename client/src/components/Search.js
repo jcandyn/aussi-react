@@ -4,6 +4,7 @@ import 'materialize-css/dist/css/materialize.min.css'
 import M from 'materialize-css/dist/js/materialize.min.js'
 import '../App.css';
 import Firebase from "../Firebase"
+import Book from "./Book"
 
 
 var database = Firebase.database();
@@ -70,10 +71,16 @@ class Search extends React.Component {
         }
         event.preventDefault();
         this.updateUserObject()
+        database.ref('users/' + this.props.userId).update({
+          "isFormFilledOut":(!this.props.isFormFilledOut)
+        });
+
+        this.setState({
+          isFormFilledOut: true
+        })
       }
 
       updateUserObject() {
-        console.log("how is this?", this.props.userId)
         alert("it's updating")
         database.ref('users/' + this.props.userId).update({
           "bio": this.state.bio,
@@ -89,7 +96,9 @@ class Search extends React.Component {
       }
       
     render() {
-        return (
+        return ( 
+          <div>
+            {(this.state.isFormFilledOut) ? < Book/> : 
             <div className="search">
   <div class="section no-pad-bot" id="index-banner">
     <div class="container">
@@ -152,12 +161,15 @@ class Search extends React.Component {
           </form>
         </div>
       </div>
+      
   
   
   <button onClick={this.handleSubmit} className="btn waves-effect waves-light">
       <i class="material-icons left">thumb_up</i>
       Find Friend  
   </button>
+            </div>
+    }
             </div>
         )
     }

@@ -172,8 +172,8 @@ background-size: 100% 10px;
 }
 
 .sign-out {
-  position: absolute;
-  /* right: 20px; */
+  position: absolute !important;
+  right: 20px;
   top: 15px;
 }
 
