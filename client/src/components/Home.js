@@ -35,7 +35,8 @@ constructor(props) {
             username: userData.name,
             email: userData.email,
             profile_picture : userData.imageUrl,
-            userId: userData.userId
+            userId: userData.userId,
+            isFormFilledOut: false
           });
       }
 
@@ -68,6 +69,9 @@ updateState = (userData) => {
         }
      
         this.updateState(userData)
+        this.retrieve()
+
+        
       
         if (res.additionalUserInfo.isNewUser === true) {
           this.savingUsers(userData)
@@ -105,7 +109,7 @@ updateState = (userData) => {
             ? 
             <div>
               <button onClick={signOut} className="sign-out blue-grey darken-4 waves-effect waves-light btn btn-small"><i class="material-icons left">power_settings_new</i>Sign Out</button>
-            {this.state.childData.isFormFilledOut ? <Search userId={user.uid}/> : <Book username={user.displayName}/>}
+            {!this.state.childData.isFormFilledOut ? <Search userId={user.uid}/> : <Book username={user.displayName}/>}
             {/* <Profile name={this.state.name}/> */}
             {/* <Book name={user.displayName}/> */}
             
