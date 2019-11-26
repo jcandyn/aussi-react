@@ -34,7 +34,8 @@ constructor(props) {
         database.ref('users/' + userData.userId).set({
             username: userData.name,
             email: userData.email,
-            profile_picture : userData.imageUrl
+            profile_picture : userData.imageUrl,
+            userId: userData.userId
           });
 
 
@@ -101,7 +102,7 @@ updateState(userData) {
             ? 
             <div>
               <button onClick={signOut} className="sign-out blue-grey darken-4 waves-effect waves-light btn btn-small"><i class="material-icons left">power_settings_new</i>Sign Out</button>
-            {/* <Search/> */}
+            <Search userId={user.userId}/>
             {/* <Profile name={this.state.name}/> */}
             {/* <Book name={user.displayName}/> */}
             
@@ -113,8 +114,6 @@ updateState(userData) {
     )
       }
     }
-  
-
   
   export default withFirebaseAuth({
     providers,
