@@ -10,9 +10,13 @@ class UserCard extends React.Component {
         return(
           <div className="container">
             <div className="row">
-          <Card style={{ width: '16rem'}}>
+          <Card style={{ width: '20rem'}}>
            <ImageHeader imageSrc={this.props.data.profile_picture}/>
-          <CardBody><p>{this.props.data.username}</p></CardBody>
+          <CardBody>
+            <h4><em>{this.props.data.username}</em></h4>
+            <p>{this.props.data.bio}</p>
+            <p><strong>{this.props.data.occupation}</strong></p>
+          </CardBody>
           <CardFooter>
             <button className="btn blue ligthen-1">
             <i className="material-icons right">email</i>

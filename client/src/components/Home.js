@@ -21,10 +21,7 @@ class Home extends React.Component {
 constructor(props) {
     super(props);
     this.state = {
-        name: "hello", 
-        email: "",
-        profile_picture: "",
-        userId: ""
+      userId: ""
 };
 }
     
@@ -37,17 +34,12 @@ constructor(props) {
             profile_picture : userData.imageUrl,
             userId: userData.userId
           });
-
-
       }
   
 updateState(userData) {
     console.log('wtf')
     this.setState({
-        name: userData.name,
-        email: userData.email,
-        profile_picture: userData.imageUrl,
-        userId: userData.userId
+       userId: userData.userId
     })
 }
 
@@ -57,7 +49,7 @@ updateState(userData) {
         console.log(res)
        
         const userData = {
-            userId : res.additionalUserInfo.profile.id,
+            userId : res.user.uid,
         name: res.additionalUserInfo.profile.name,
           email: res.additionalUserInfo.profile.email,
           imageUrl: res.additionalUserInfo.profile.picture
@@ -88,6 +80,7 @@ updateState(userData) {
             <br/>
             <br/>
             <br/>
+            
             <p className="pink-text text-lighten-3">Hey, {user.displayName} !</p>
             <img src={user.photoURL} className="profile-image"/>
             </div>
@@ -102,7 +95,7 @@ updateState(userData) {
             ? 
             <div>
               <button onClick={signOut} className="sign-out blue-grey darken-4 waves-effect waves-light btn btn-small"><i class="material-icons left">power_settings_new</i>Sign Out</button>
-            <Search userId={user.userId}/>
+            <Search userId={user.uid}/>
             {/* <Profile name={this.state.name}/> */}
             {/* <Book name={user.displayName}/> */}
             

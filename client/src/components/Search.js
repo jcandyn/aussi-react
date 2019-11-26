@@ -64,13 +64,14 @@ function showPosition(position) {
         }
         alert(answer.bio + " " + answer.occupation);
         event.preventDefault();
-        console.log("how is this?", this.props.userId)
-        this.updateUserObject(this.props.userId)
+      
+        this.updateUserObject()
       }
 
-      updateUserObject(userId) {
+      updateUserObject() {
+        console.log("how is this?", this.props.userId)
         alert("it's updating")
-        database.ref('users/' + userId).update({
+        database.ref('users/' + this.props.userId).update({
           "bio": this.state.bio,
           "occupation": this.state.occupation
         });
@@ -154,5 +155,7 @@ function showPosition(position) {
         )
     }
 }
+
+
 
 export default Search;
