@@ -10,10 +10,10 @@ class UserCard extends React.Component {
         return(
           <div className="container">
             <div className="row">
-          <Card style={{ width: '20rem'}}>
+          <Card style={{ width: '22rem'}}>
            <ImageHeader imageSrc={this.props.data.profile_picture}/>
           <CardBody>
-            <h4><em>{this.props.data.username}</em></h4>
+            <h5><em>{this.props.data.username}</em></h5>
             <p>{this.props.data.bio}</p>
             <p>{this.props.data.location}</p>
             {/* {this.props.data.hobbies.map(item => <p>Hobbies: {item}</p>)} */}
