@@ -22,12 +22,11 @@ constructor(props) {
     super(props);
     this.state = {
       userId: "",
-      childData: ""
+      childData: "",
+      // isFormFilledOut: ""
 };
 }
-    componentDidMount() {
-      this.retrieve()
-    }
+
   
     savingUsers = (userData) => {
 
@@ -35,21 +34,12 @@ constructor(props) {
             username: userData.name,
             email: userData.email,
             profile_picture : userData.imageUrl,
-            userId: userData.userId,
-            isFormFilledOut: false
+            userId: userData.userId
+            // isFormFilledOut: false
           });
       }
 
-      retrieve = () => {
-        let childData;
-        var leadsRef = database.ref('users/' + this.state.userId);
-        leadsRef.on('value', snapshot => {
-            childData = snapshot.val();
-            this.setState({
-                childData: childData
-            })
-        });
-     }
+    
 
  
 updateState = (userData) => {
@@ -69,12 +59,30 @@ updateState = (userData) => {
         }
      
         this.updateState(userData)
-        this.retrieve()
-
+        // let childData;
+        // var leadsRef = database.ref('users/' + this.state.userId);
+        // leadsRef.on('value', snapshot => {
+        //     childData = snapshot.val();
+        // });
+    
+        // this.setState({
+        //   childData: childData
+        // })
+     
         
       
         if (res.additionalUserInfo.isNewUser === true) {
           this.savingUsers(userData)
+          // let childData;
+          // var leadsRef = database.ref('users/' + this.state.userId);
+          // leadsRef.on('value', snapshot => {
+          //     childData = snapshot.val();
+          // });
+  
+          // this.setState({
+          //   childData: childData
+          // })
+          
         }
       })
     }
@@ -109,9 +117,10 @@ updateState = (userData) => {
             ? 
             <div>
               <button onClick={signOut} className="sign-out blue-grey darken-4 waves-effect waves-light btn btn-small"><i class="material-icons left">power_settings_new</i>Sign Out</button>
-            {!this.state.childData.isFormFilledOut ? <Search userId={user.uid}/> : <Book username={user.displayName}/>}
+            {/* {!this.state.childData.isFormFilledOut ? <Search userId={user.uid}/> : <Book username={user.displayName}/>} */}
             {/* <Profile name={this.state.name}/> */}
             {/* <Book name={user.displayName}/> */}
+            {<Search userId={user.uid} username={user.displayName}/>}
             
               </div>
             : <button className="btn light-blue darken-3 waves-effect waves-light" onClick={this.realSignIn}><i className="material-icons right">perm_identity</i>Sign in with Google</button>

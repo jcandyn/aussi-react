@@ -11,7 +11,8 @@ var database = Firebase.database();
 class Search extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {value: ''};
+        this.state = {value: '',
+        isFormFilledOut: ""};
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleMultiple = this.handleMultiple.bind(this);
@@ -20,6 +21,17 @@ class Search extends React.Component {
       componentDidMount = () => {
         console.log(M);
         M.AutoInit();
+
+        let childData;
+          var leadsRef = database.ref('users/' + this.props.userId);
+          leadsRef.on('value', snapshot => {
+              childData = snapshot.val();
+              this.setState({
+                isFormFilledOut: childData.isFormFilledOut
+              })
+          });
+
+         
     }
 
   //   showPosition = (position) => {
@@ -74,10 +86,6 @@ class Search extends React.Component {
         database.ref('users/' + this.props.userId).update({
           "isFormFilledOut":(!this.props.isFormFilledOut)
         });
-
-        this.setState({
-          isFormFilledOut: true
-        })
       }
 
       updateUserObject() {
@@ -98,7 +106,7 @@ class Search extends React.Component {
     render() {
         return ( 
           <div>
-            {(this.state.isFormFilledOut) ? < Book/> : 
+            {(this.state.isFormFilledOut) ? < Book username={this.props.username}/> : 
             <div className="search">
   <div class="section no-pad-bot" id="index-banner">
     <div class="container">
