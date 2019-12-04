@@ -8,8 +8,12 @@ var database = Firebase.database();
 
 class Users extends React.Component {
     state = {
-        childData: ""
+        childData: "",
+        userId: "",
+        user: null
     }
+
+   
 
    retrieve = () => {
        let childData;
@@ -23,7 +27,13 @@ class Users extends React.Component {
     }
 
     componentDidMount() {
-        this.retrieve()
+     
+        const { handle } = this.props.match.params
+
+             this.setState({userId:handle})
+
+       alert("ho",this.state.userId)
+          this.retrieve()
     }
 
 
@@ -38,7 +48,8 @@ class Users extends React.Component {
             <div>
             <h3>These are all the users in the app</h3>
             {/* {console.log(this.state.childData)} */}
-            {data.map(item => <UserCard data={item}/>)}
+            {alert("working second alert!" + this.state.userId)}
+            {data.map(item => <UserCard thisUser={this.state.userId} data={item}/>)}
             </div>
         )
     }

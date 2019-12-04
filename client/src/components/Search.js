@@ -26,9 +26,11 @@ class Search extends React.Component {
           var leadsRef = database.ref('users/' + this.props.userId);
           leadsRef.on('value', snapshot => {
               childData = snapshot.val();
+              if (this.state.isFormFilledOut) {
               this.setState({
-                isFormFilledOut: childData.isFormFilledOut
+                isFormFilledOut: !this.state.isFormFilledOut
               })
+            }
           });
 
          

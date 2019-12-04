@@ -23,9 +23,18 @@ constructor(props) {
     this.state = {
       userId: "",
       childData: "",
-      // isFormFilledOut: ""
+      isFormFilledOut: ""
 };
 }
+
+
+updateIsFormFIlledOut = () => {
+  this.setState({
+    isFormFilledOut: !this.state.isFormFilledOut
+  })
+}
+
+
 
   
     savingUsers = (userData) => {
@@ -46,6 +55,7 @@ updateState = (userData) => {
     this.setState({
        userId: userData.userId,
     })
+  
 }
 
 
@@ -57,8 +67,11 @@ updateState = (userData) => {
           email: res.additionalUserInfo.profile.email,
           imageUrl: res.additionalUserInfo.profile.picture
         }
-     
+        
+
         this.updateState(userData)
+         {alert(this.state.userId)}
+            {this.props.whoIsThisUser(this.state.userId)}
         // let childData;
         // var leadsRef = database.ref('users/' + this.state.userId);
         // leadsRef.on('value', snapshot => {
@@ -102,7 +115,7 @@ updateState = (userData) => {
             <br/>
             <br/>
             <br/>
-            
+         
             <p className="pink-text text-lighten-3">Hey, {user.displayName} !</p>
             <img src={user.photoURL} className="profile-image"/>
             </div>
@@ -116,11 +129,12 @@ updateState = (userData) => {
           user
             ? 
             <div>
+                
               <button onClick={signOut} className="sign-out blue-grey darken-4 waves-effect waves-light btn btn-small"><i class="material-icons left">power_settings_new</i>Sign Out</button>
-            {/* {!this.state.childData.isFormFilledOut ? <Search userId={user.uid}/> : <Book username={user.displayName}/>} */}
+            {this.state.childData.isFormFilledOut ? <Search userId={user.uid}/> : <Book username={user.displayName}/>}
             {/* <Profile name={this.state.name}/> */}
             {/* <Book name={user.displayName}/> */}
-            {<Search userId={user.uid} username={user.displayName}/>}
+            {/* {<Search  userId={user.uid} username={user.displayName}/>} */}
             
               </div>
             : <button className="btn light-blue darken-3 waves-effect waves-light" onClick={this.realSignIn}><i className="material-icons right">perm_identity</i>Sign in with Google</button>
