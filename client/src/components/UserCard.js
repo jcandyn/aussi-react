@@ -41,9 +41,8 @@ componentDidMount() {
             <button value={this.props.data.userId} onClick={
               // e => alert(e.target.value)
               e => {
-                database.ref('users/' + e.target.value).update({
-                  "friendRequests":this.props.thisUser
-                });
+                database.ref('users/' + e.target.value).child('friendRequests').push(this.props.thisUser
+                );
               }
               
               }className="btn blue ligthen-1">
