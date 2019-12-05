@@ -28,13 +28,13 @@ class Users extends React.Component {
        });
 
        let FriendRequestData;
-       var leadsRef = database.ref('users/' + this.state.userId + '/friendRequests');
-       leadsRef.on('value', snapshot => {
-        FriendRequestData = snapshot.val();
-           this.setState({
-               FriendRequests: FriendRequestData
-           })
-       });
+    //    var leadsRef = database.ref('users/' + this.state.userId + '/friendRequests/');
+    //    leadsRef.on('value', snapshot => {
+    //     FriendRequestData = snapshot.val();
+    //        this.setState({
+    //            FriendRequests: FriendRequestData
+    //        })
+    //    });
     }
 
     componentDidMount() {
@@ -55,7 +55,7 @@ class Users extends React.Component {
             console.log(data);
          });
 
-        //  let friendData = []
+         let friendData = []
         //  Object.values(this.state.FriendRequests).forEach(value=>{
            
         //     friendData.push(value)
@@ -64,11 +64,10 @@ class Users extends React.Component {
         return(
             <div>
             <h3>These are all the users in the app</h3>
-            {/* {console.log(this.state.childData)} */}
-            {alert("working second alert!" + this.state.userId)}
             {data.map(item => <UserCard thisUser={this.state.userId} data={item}/>)}
             <h4>These are your friend requests</h4>
             {/* {friendData.map(item => <FriendRequest thisUser={this.state.userId} data={item}/>)} */}
+            <FriendRequest/>
             {console.log(this.state.FriendRequests)}
             </div>
            

@@ -19,8 +19,13 @@ this.setState({
 })
 }
 
+getFriends = () => {
+
+}
+
 componentDidMount() {
   this.updateCurrentUser()
+  this.getFriends()
 }
 
     render() {
@@ -39,13 +44,35 @@ componentDidMount() {
           </CardBody>
           <CardFooter>
             <button value={this.props.data.userId} onClick={
+               
               // e => alert(e.target.value)
               e => {
-                database.ref('users/' + e.target.value).child('friendRequests').push(this.props.thisUser
-                );
-              }
+
               
-              }className="btn blue ligthen-1">
+                let tempFriendsArray = []
+                let tempFriends;
+               
+                var ref = database.ref('users/' + e.target.value + "/friendRequests");
+                
+                ref.on('value', snapshot => {
+                    tempFriends = snapshot.val();
+                    if (tempFriends !== null) {
+                    // tempFriends.push(this.props.thisUser)
+                    console.log("what is this?",tempFriends)
+                    
+                    tempFriendsArray = tempFriends
+                    tempFriendsArray.push(this.props.thisUser)
+                 
+                  }
+                });
+                
+            
+                tempFriendsArray.push(this.props.thisUser)
+                database.ref('users/' + e.target.value + '/friendRequests').set(tempFriendsArray
+                  );
+              
+            }
+              } className="btn blue ligthen-1">
             <i className="material-icons right">email</i>
               Friend Request
               </button>

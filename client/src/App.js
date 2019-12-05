@@ -9,6 +9,7 @@ import './App.css';
 import 'firebase/auth';
 import Users from '../src/components/Users'
 import Home from '../src/components/Home'
+import Chat from '../src/components/Chat'
 
 class App extends React.Component {
   constructor(props) {
@@ -38,6 +39,9 @@ class App extends React.Component {
             <li>
               <Link to={`/${this.state.thisIsUser}`}>Users</Link>
             </li>
+            <li>
+              <Link to="/chat">Chat</Link>
+            </li>
           </ul>
         </nav>
 
@@ -47,12 +51,16 @@ class App extends React.Component {
           <Route path="/about">
             <About />
           </Route>
+          <Route path="/chat">
+            <Chat />
+          </Route>
           <Route path='/:handle' component={Users}>
             {/* <Users thisUser={this.state.thisIsUser}/> */}
           </Route>
           <Route path="/">
             <Home whoIsThisUser={this.whoIsThisUser} />
           </Route>
+        
         </Switch>
       </div>
     </Router>
