@@ -56,18 +56,17 @@ class Users extends React.Component {
          });
 
          let friendData = []
-        //  Object.values(this.state.FriendRequests).forEach(value=>{
+         Object.values(this.state.FriendRequests).forEach(value=>{
            
-        //     friendData.push(value)
-        //     console.log(data);
-        //  });
+            friendData.push(value)
+            console.log(data);
+         });
         return(
             <div>
             <h3>These are all the users in the app</h3>
             {data.map(item => <UserCard thisUser={this.state.userId} data={item}/>)}
             <h4>These are your friend requests</h4>
-            {/* {friendData.map(item => <FriendRequest thisUser={this.state.userId} data={item}/>)} */}
-            <FriendRequest/>
+            {friendData.map(item => <FriendRequest thisUser={this.state.userId} data={item}/>)}
             {console.log(this.state.FriendRequests)}
             </div>
            

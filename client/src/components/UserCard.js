@@ -56,12 +56,11 @@ componentDidMount() {
                 
                 ref.on('value', snapshot => {
                     tempFriends = snapshot.val();
-                    if (tempFriends !== null) {
+                    if (tempFriends !== null)  {
                     // tempFriends.push(this.props.thisUser)
                     console.log("what is this?",tempFriends)
                     
                     tempFriendsArray = tempFriends
-                    tempFriendsArray.push(this.props.thisUser)
                  
                   }
                 });
