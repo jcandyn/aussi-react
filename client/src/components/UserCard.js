@@ -17,10 +17,13 @@ updateCurrentUser = () => {
 this.setState({
   userId: this.props.thisUser
 })
+
+console.log("is this user?", this.props.thisUser)
+this.props.updateUser(this.props.thisUser)
 }
 
 getFriends = () => {
-
+this.props.updateFriendRequests(this.props.thisUser)
 }
 
 componentDidMount() {
@@ -57,11 +60,8 @@ componentDidMount() {
                 ref.on('value', snapshot => {
                     tempFriends = snapshot.val();
                     if (tempFriends !== null)  {
-                    // tempFriends.push(this.props.thisUser)
-                    console.log("what is this?",tempFriends)
-                    
+                    // tempFriends.push(this.props.thisUser)      
                     tempFriendsArray = tempFriends
-                 
                   }
                 });
                 

@@ -15,7 +15,27 @@ class Users extends React.Component {
         FriendRequests: ""
     }
 
+    updateFriendRequests = (userId) => {
+        let FriendRequestData;
+        console.log("is this id?",userId)
+        var ref = database.ref('users/' + userId + '/friendRequests');
+        ref.on('value', snapshot => {
+         FriendRequestData = snapshot.val();
+         console.log("is this null?",FriendRequestData)
+            this.setState({
+                FriendRequests: FriendRequestData
+            })
+        });
+    }
+
    
+    updateUser = (userId) => {
+        this.setState({
+            userId: userId
+        })
+
+        console.log("userId is updating", this.state.userId)
+    }
 
    retrieve = () => {
        let childData;
@@ -27,14 +47,7 @@ class Users extends React.Component {
            })
        });
 
-       let FriendRequestData;
-    //    var leadsRef = database.ref('users/' + this.state.userId + '/friendRequests/');
-    //    leadsRef.on('value', snapshot => {
-    //     FriendRequestData = snapshot.val();
-    //        this.setState({
-    //            FriendRequests: FriendRequestData
-    //        })
-    //    });
+      
     }
 
     componentDidMount() {
@@ -56,15 +69,18 @@ class Users extends React.Component {
          });
 
          let friendData = []
-         Object.values(this.state.FriendRequests).forEach(value=>{
+        //  Object.values(this.state.FriendRequests).forEach(value=>{
            
-            friendData.push(value)
-            console.log(data);
-         });
+        //     friendData.push(value)
+        //     console.log(data);
+        //  });
+        friendData.push(this.state.FriendRequests)
+
+        console.log("what is this???", this.state.FriendRequests)
         return(
             <div>
             <h3>These are all the users in the app</h3>
-            {data.map(item => <UserCard thisUser={this.state.userId} data={item}/>)}
+            {data.map(item => <UserCard updateFriendRequests ={this. updateFriendRequests} updateUser = {this.updateUser} thisUser={this.state.userId} data={item}/>)}
             <h4>These are your friend requests</h4>
             {friendData.map(item => <FriendRequest thisUser={this.state.userId} data={item}/>)}
             {console.log(this.state.FriendRequests)}

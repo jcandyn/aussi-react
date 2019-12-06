@@ -4,6 +4,15 @@ import firebaseConfig from '../firebaseConfig';
 import Firebase from "../Firebase"
 
 class FriendRequest extends React.Component {
+    componentDidMount = () => {
+        this.friendRequests()
+    
+    }
+
+    friendRequests = () => {
+     
+    }
+
 render() {
     return(
         <div>
