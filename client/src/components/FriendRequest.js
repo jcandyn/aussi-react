@@ -2,6 +2,7 @@ import React from "react";
 import '../App.css';
 import firebaseConfig from '../firebaseConfig';
 import Firebase from "../Firebase"
+import { Card, ImageHeader, CardBody, CardFooter } from 'react-simple-card';
 
 var database = Firebase.database()
 class FriendRequest extends React.Component {
@@ -45,13 +46,32 @@ class FriendRequest extends React.Component {
 }
 
 render() {
+
+    
     return(
         <div>
-    <p>{this.state.FriendRequestsData[0] ? this.state.FriendRequestsData[0].username : console.log("nothing")}</p>
-     {console.log("info almost there",this.state.FriendRequestsData)}
-   
-        {/* {console.log("friend requests!",this.props.data)} */}
+        
+        {this.state.FriendRequestsData[0] ?
+      
+            <Card style={{ width: '22rem'}}>
+           <ImageHeader imageSrc={this.state.FriendRequestsData[0].profile_picture}/>
+          <CardBody>
+            <h5><em>{this.state.FriendRequestsData[0].username }</em></h5>
+            <p>{this.state.FriendRequestsData[0].bio}</p>
+            <p>{this.state.FriendRequestsData[0].location}</p>
+            {/* {this.props.data.hobbies.map(item => <p>Hobbies: {item}</p>)} */}
+        <p>{this.state.FriendRequestsData[0].hobbies}</p>
+            <p><strong>{this.state.FriendRequestsData[0].occupation}</strong></p>
+          </CardBody>
+          <CardFooter>
+          </CardFooter>
+              </Card>
+        
+              :
+        console.log('nada')}
         </div>
+      
+   
     )
 }
 

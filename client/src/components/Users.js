@@ -78,7 +78,11 @@ class Users extends React.Component {
             {data.map(item => <UserCard updateFriendRequests ={this. updateFriendRequests} updateUser = {this.updateUser} thisUser={this.state.userId} data={item}/>)}
             <h4>These are your friend requests</h4>
             {console.log('this is what is being sent', friendData)}
+            <div class="container">
+                <div class="row">
             {(friendData[0].length > 1) ? friendData[0].map(item => <FriendRequest thisUser={this.state.userId} data={item}/>) : console.log("nada")}
+            </div>
+            </div>
             </div>
            
         )
