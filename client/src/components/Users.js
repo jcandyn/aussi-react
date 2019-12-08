@@ -17,11 +17,9 @@ class Users extends React.Component {
 
     updateFriendRequests = (userId) => {
         let FriendRequestData;
-        console.log("is this id?",userId)
         var ref = database.ref('users/' + userId + '/friendRequests');
         ref.on('value', snapshot => {
          FriendRequestData = snapshot.val();
-         console.log("is this null?",FriendRequestData)
             this.setState({
                 FriendRequests: FriendRequestData
             })
@@ -33,8 +31,6 @@ class Users extends React.Component {
         this.setState({
             userId: userId
         })
-
-        console.log("userId is updating", this.state.userId)
     }
 
    retrieve = () => {
@@ -65,7 +61,6 @@ class Users extends React.Component {
         Object.values(this.state.childData).forEach(value=>{
            
             data.push(value)
-            console.log(data);
          });
 
          let friendData = []
@@ -76,14 +71,14 @@ class Users extends React.Component {
         //  });
         friendData.push(this.state.FriendRequests)
 
-        console.log("what is this???", this.state.FriendRequests)
+     
         return(
             <div>
             <h3>These are all the users in the app</h3>
             {data.map(item => <UserCard updateFriendRequests ={this. updateFriendRequests} updateUser = {this.updateUser} thisUser={this.state.userId} data={item}/>)}
             <h4>These are your friend requests</h4>
-            {friendData.map(item => <FriendRequest thisUser={this.state.userId} data={item}/>)}
-            {console.log(this.state.FriendRequests)}
+            {console.log('this is what is being sent', friendData)}
+            {(friendData[0].length > 1) ? friendData[0].map(item => <FriendRequest thisUser={this.state.userId} data={item}/>) : console.log("nada")}
             </div>
            
         )
