@@ -6,10 +6,29 @@ import { Card, ImageHeader, CardBody, CardFooter } from 'react-simple-card';
 
 var database = Firebase.database()
 class FriendRequest extends React.Component {
-   state = {
-       FriendRequestsData: []
+  
+   constructor(props) {
+    super(props);
+    this.acceptRequest = this.acceptRequest.bind(this);
+    this.declineRequest = this.declineRequest.bind(this);
+    this.state = {
+        FriendRequestsData: []
+};
+}
+
+   acceptRequest(friendId,userId,e) {
+    e.preventDefault()
+       alert('accepting request')
+       alert(userId)
+       alert(friendId)
    }
 
+   declineRequest (friendId,userId,e) {
+e.preventDefault()
+    alert('declining request')  
+    alert(userId)
+    alert(friendId)
+   }
 
     componentDidMount = () => {
         // var friendRequests = this.props.data;
@@ -64,6 +83,14 @@ render() {
             <p><strong>{this.state.FriendRequestsData[0].occupation}</strong></p>
           </CardBody>
           <CardFooter>
+              <div class="row">
+                  <div class="col">
+              <button  onClick={e => {this.acceptRequest(this.state.FriendRequestsData[0].userId,this.props.thisUser,e)}}className="btn">Accept</button>
+              </div>
+              <div class="col">
+              <button className="btn red darken-1" onClick={e => {this.declineRequest(this.state.FriendRequestsData[0].userId,this.props.thisUser,e)}}>Decline</button>
+              </div>
+              </div>
           </CardFooter>
               </Card>
         
