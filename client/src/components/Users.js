@@ -74,8 +74,16 @@ class Users extends React.Component {
      
         return(
             <div>
+                 <div className="container">
+            <div className="row">
             <h3>These are all the users in the app</h3>
             {data.map(item => <UserCard updateFriendRequests ={this. updateFriendRequests} updateUser = {this.updateUser} thisUser={this.state.userId} data={item}/>)}
+            </div>
+            </div>
+            <div class="row">
+            <h4>These are your <strong>FRIENDS</strong></h4>
+            </div>
+            <div class="row">
             <h4>These are your friend requests</h4>
             {console.log('this is what is being sent', friendData)}
             <div class="container">
@@ -84,6 +92,8 @@ class Users extends React.Component {
             </div>
             </div>
             </div>
+            </div>
+           
            
         )
     }

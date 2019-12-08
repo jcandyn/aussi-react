@@ -37,9 +37,8 @@ selfFriend = () => {
 
     render() {
         return(
-          <div className="container">
-            <div className="row">
-          <Card style={{ width: '22rem'}}>
+         <div>
+          <Card style={{ width: '18rem'}}>
            <ImageHeader imageSrc={this.props.data.profile_picture}/>
           <CardBody>
             <h5><em>{this.props.data.username}</em></h5>
@@ -84,7 +83,7 @@ selfFriend = () => {
           </CardFooter>
       </Card>
       </div>
-      </div>
+    
         )
     }
 
