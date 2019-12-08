@@ -31,6 +31,10 @@ componentDidMount() {
   this.getFriends()
 }
 
+selfFriend = () => {
+  alert("sorry, you are REALLY cool and everything, but you can't be your own friend!")
+}
+
     render() {
         return(
           <div className="container">
@@ -46,35 +50,37 @@ componentDidMount() {
             <p><strong>{this.props.data.occupation}</strong></p>
           </CardBody>
           <CardFooter>
-            <button value={this.props.data.userId} onClick={
+            {this.props.data.userId !== this.props.thisUser ? <button value={this.props.data.userId} onClick={
                
-              // e => alert(e.target.value)
-              e => {
-
-              
-                let tempFriendsArray = []
-                let tempFriends;
+               // e => alert(e.target.value)
+               e => {
+ 
                
-                var ref = database.ref('users/' + e.target.value + "/friendRequests");
+                 let tempFriendsArray = []
+                 let tempFriends;
                 
-                ref.on('value', snapshot => {
-                    tempFriends = snapshot.val();
-                    if (tempFriends !== null)  {
-                    // tempFriends.push(this.props.thisUser)      
-                    tempFriendsArray = tempFriends
-                  }
-                });
-                
-            
-                tempFriendsArray.push(this.props.thisUser)
-                database.ref('users/' + e.target.value + '/friendRequests').set(tempFriendsArray
-                  );
-              
-            }
-              } className="btn blue ligthen-1">
-            <i className="material-icons right">email</i>
-              Friend Request
-              </button>
+                 var ref = database.ref('users/' + e.target.value + "/friendRequests");
+                 
+                 ref.on('value', snapshot => {
+                     tempFriends = snapshot.val();
+                     if (tempFriends !== null)  {
+                     // tempFriends.push(this.props.thisUser)      
+                     tempFriendsArray = tempFriends
+                   }
+                 });
+                 
+             
+                 tempFriendsArray.push(this.props.thisUser)
+                 database.ref('users/' + e.target.value + '/friendRequests').set(tempFriendsArray
+                   );
+               
+             }
+               } className="btn blue ligthen-1">
+             <i className="material-icons right">email</i>
+               Friend Request
+               </button> : <button onClick={this.selfFriend} className="btn blue ligthen-1">
+             <i className="material-icons right">email</i>Friend Request</button>}
+           
           </CardFooter>
       </Card>
       </div>
