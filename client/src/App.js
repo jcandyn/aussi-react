@@ -18,7 +18,7 @@ import initialState from './initial-state';
 
 import { startListeningForMessages } from './actions/messages';
 
-const middleware = [ thunk ];
+const middleware = [thunk];
 const enhancers = [];
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -75,7 +75,7 @@ class App extends React.Component {
               </Route>
 
               {/* <Route path="/chat">
-                < />
+                <Chat />
               </Route> */}
 
               <Route
@@ -88,7 +88,7 @@ class App extends React.Component {
                 {/* <Users thisUser={this.state.thisIsUser}/> */}
               </Route>
               <Route path="/">
-                <Home whoIsThisUser={this.whoIsThisUser} />
+                <Home thisUser={this.state.thisIsUser} whoIsThisUser={this.whoIsThisUser} />
               </Route>
 
             </Switch>
@@ -97,8 +97,7 @@ class App extends React.Component {
 
       </div>
     );
-
-
+    
     function About() {
       return <h2>About</h2>;
     }
