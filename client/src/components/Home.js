@@ -10,12 +10,11 @@ import Search from './Search'
 import Profile from './Profile'
 import Book from './Book'
 
-
 const firebaseAppAuth = Firebase.auth();
 const providers = {
   googleProvider: new firebase.auth.GoogleAuthProvider(),
 };
-var database = firebase.database();
+var database = Firebase.database();
 
 class Home extends React.Component {
 constructor(props) {
@@ -23,41 +22,40 @@ constructor(props) {
     this.state = {
       userId: "",
       childData: "",
-      isFormFilledOut: ""
+      isFormFilledOut: "",
+      infoFromUser:""
 };
 }
-
-
-updateIsFormFIlledOut = () => {
-  this.setState({
-    isFormFilledOut: !this.state.isFormFilledOut
-  })
+componentDidMount = () => {
+  this.getInfoFromUser(this.props.thisUser)
 }
 
+getInfoFromUser = (userId) => {
+  let data;
+        var ref = database.ref('users/' + userId);
+        ref.on('value', snapshot => {
+         data = snapshot.val();
+            this.setState({
+                infoFromUser: data
+            })
+        });
+}
 
-
-  
     savingUsers = (userData) => {
-
         database.ref('users/' + userData.userId).set({
             username: userData.name,
             email: userData.email,
             profile_picture : userData.imageUrl,
-            userId: userData.userId
-            // isFormFilledOut: false
+            userId: userData.userId,
+            isFormFilledOut: false
           });
       }
 
-    
-
- 
 updateState = (userData) => {
     this.setState({
        userId: userData.userId,
     })
-  
 }
-
 
     realSignIn = () => {
       this.props.signInWithGoogle().then((res) => {
@@ -68,34 +66,12 @@ updateState = (userData) => {
           imageUrl: res.additionalUserInfo.profile.picture
         }
         
-
         this.updateState(userData)
-         {alert(this.state.userId)}
-            {this.props.whoIsThisUser(this.state.userId)}
-        // let childData;
-        // var leadsRef = database.ref('users/' + this.state.userId);
-        // leadsRef.on('value', snapshot => {
-        //     childData = snapshot.val();
-        // });
-    
-        // this.setState({
-        //   childData: childData
-        // })
-     
+        this.getInfoFromUser(userData.userId)
+        this.props.whoIsThisUser(this.state.userId)
         
-      
         if (res.additionalUserInfo.isNewUser === true) {
           this.savingUsers(userData)
-          // let childData;
-          // var leadsRef = database.ref('users/' + this.state.userId);
-          // leadsRef.on('value', snapshot => {
-          //     childData = snapshot.val();
-          // });
-  
-          // this.setState({
-          //   childData: childData
-          // })
-          
         }
       })
     }
@@ -128,14 +104,11 @@ updateState = (userData) => {
         {
           user
             ? 
-            <div>
-                
+            <div> 
               <button onClick={signOut} className="sign-out blue-grey darken-4 waves-effect waves-light btn btn-small"><i class="material-icons left">power_settings_new</i>Sign Out</button>
-            {this.state.childData.isFormFilledOut ? <Search userId={user.uid}/> : <Book username={user.displayName}/>}
+            {this.state.infoFromUser.isFormFilledOut ? <Book username={user.displayName}/>  : <Search isFormFilledOut={this.state.infoFromUser.isFormFilledOut} userId={user.uid} />}
             {/* <Profile name={this.state.name}/> */}
             {/* <Book name={user.displayName}/> */}
-            {/* {<Search  userId={user.uid} username={user.displayName}/>} */}
-            
               </div>
             : <button className="btn light-blue darken-3 waves-effect waves-light" onClick={this.realSignIn}><i className="material-icons right">perm_identity</i>Sign in with Google</button>
         }

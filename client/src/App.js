@@ -58,7 +58,7 @@ class App extends React.Component {
             {/* <Users thisUser={this.state.thisIsUser}/> */}
           </Route>
           <Route path="/">
-            <Home whoIsThisUser={this.whoIsThisUser} />
+            <Home thisUser={this.state.thisIsUser} whoIsThisUser={this.whoIsThisUser} />
           </Route>
         
         </Switch>

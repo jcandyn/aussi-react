@@ -26,11 +26,7 @@ class Search extends React.Component {
           var leadsRef = database.ref('users/' + this.props.userId);
           leadsRef.on('value', snapshot => {
               childData = snapshot.val();
-              if (this.state.isFormFilledOut) {
-              this.setState({
-                isFormFilledOut: !this.state.isFormFilledOut
-              })
-            }
+              
           });
 
          
@@ -67,6 +63,14 @@ class Search extends React.Component {
        "hobbies" : value
       });
     }
+
+    toggleState = () => {
+      
+        this.setState({
+          isFormFilledOut: !this.props.isFormFilledOut
+        })
+      
+    }
     
       handleChange(event) {
         let value = event.target.value
@@ -78,16 +82,20 @@ class Search extends React.Component {
       }
     
       handleSubmit = (event) => {
+        event.preventDefault()
         const answer = {
           bio : this.state.bio,
           occupation: this.state.occupation,
          location: this.state.location
         }
-        event.preventDefault();
+        
         this.updateUserObject()
         database.ref('users/' + this.props.userId).update({
           "isFormFilledOut":(!this.props.isFormFilledOut)
+          
         });
+       
+      this.toggleState()
       }
 
       updateUserObject() {
@@ -112,7 +120,7 @@ class Search extends React.Component {
    
         return ( 
           <div>
-            {(this.state.isFormFilledOut) ? < Book username={this.props.username}/> : 
+            {this.props.isFormFilledOut ? < Book username={this.props.username}/> : 
             <div className="search">
   <div class="section no-pad-bot" id="index-banner">
     <div class="container">

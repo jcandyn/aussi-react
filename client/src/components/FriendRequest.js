@@ -21,6 +21,10 @@ class FriendRequest extends React.Component {
        alert('accepting request')
        alert(userId)
        alert(friendId)
+       database.ref('users/' + userId + "/friendRequests/" + friendId).set({
+      "accepted": true
+      });
+
    }
 
    declineRequest (friendId,userId,e) {
@@ -28,6 +32,9 @@ e.preventDefault()
     alert('declining request')  
     alert(userId)
     alert(friendId)
+    database.ref('users/' + userId + "/friendRequests/" + friendId).update({
+        accepted: null
+        });
    }
 
     componentDidMount = () => {

@@ -37,6 +37,7 @@
     "materialize-css": "^1.0.0-rc.2",
     "mongoose": "^5.7.11",
     "react-bootstrap": "^1.0.0-beta.16",
+    "react-router-dom": "^5.1.2",
     "react-simple-card": "^2.0.2",
     "react-with-firebase-auth": "^1.1.0"
   }

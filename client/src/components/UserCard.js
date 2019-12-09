@@ -54,24 +54,29 @@ selfFriend = () => {
                // e => alert(e.target.value)
                e => {
  
-               
+             
                  let tempFriendsArray = []
                  let tempFriends;
+                let friendId = e.target.value
                 
-                 var ref = database.ref('users/' + e.target.value + "/friendRequests");
+                //  var ref = database.ref('users/' + e.target.value + "/friendRequests");
                  
-                 ref.on('value', snapshot => {
-                     tempFriends = snapshot.val();
-                     if (tempFriends !== null)  {
-                     // tempFriends.push(this.props.thisUser)      
-                     tempFriendsArray = tempFriends
-                   }
-                 });
+                database.ref('users/' + friendId + "/friendRequests/" + this.props.thisUser).set({
+                  "accepted": false
+                  });
+
+                //  ref.on('value', snapshot => {
+                //      tempFriends = snapshot.val();
+                //      if (tempFriends !== null)  {
+                //      // tempFriends.push(this.props.thisUser)      
+                //      tempFriendsArray = tempFriends
+                //    }
+                //  });
                  
              
-                 tempFriendsArray.push(this.props.thisUser)
-                 database.ref('users/' + e.target.value + '/friendRequests').set(tempFriendsArray
-                   );
+                //  tempFriendsArray.push(this.props.thisUser)
+                //  database.ref('users/' + e.target.value + '/friendRequests').set(tempFriendsArray
+                //    );
                
              }
                } className="btn blue ligthen-1">
