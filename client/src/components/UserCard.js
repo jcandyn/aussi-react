@@ -18,7 +18,7 @@ this.setState({
   userId: this.props.thisUser
 })
 
-console.log("is this user?", this.props.thisUser)
+
 this.props.updateUser(this.props.thisUser)
 }
 

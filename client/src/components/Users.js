@@ -58,7 +58,7 @@ class Users extends React.Component {
 
     render() {
         let data = []
-        console.log("WWW",this.state.childData)
+
         Object.values(this.state.childData).forEach(value=>{
           
             data.push(value)
@@ -67,12 +67,10 @@ class Users extends React.Component {
          let friendData = []
 
          if (this.state.FriendRequests) {
-         console.log("hhh",this.state.FriendRequests)
-
+       
          Object.keys(this.state.FriendRequests).forEach(key=>{
-           console.log("ooo",key)
             friendData.push(key)
-            console.log("this is being passed down",data);
+          
          });
         }
         // friendData.push(this.state.FriendRequests)
@@ -91,7 +89,7 @@ class Users extends React.Component {
             </div>
             <div class="row">
             <h4>These are your friend requests</h4>
-            {console.log('this is what is being sent', friendData)}
+       
             <div class="container">
                 <div class="row">
             {(friendData !== null && friendData.length) ? friendData.map(item => <FriendRequest thisUser={this.state.userId} data={item}/>) : console.log("nada")}
