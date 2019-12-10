@@ -11,8 +11,6 @@ class UserCard extends React.Component {
     userId: ""
 }
 
-
-
 updateCurrentUser = () => {
 this.setState({
   userId: this.props.thisUser
@@ -35,21 +33,6 @@ selfFriend = () => {
   alert("sorry, you are REALLY cool and everything, but you can't be your own friend!")
 }
 
-    
-      
- 
-    // static defaultProps = {
-    //   name: 'John Doe',
-    //   email: 'JohnDoe@example.com',
-    //   pic: 'picture.jpg'
-    // }
-  
-    // static propTypes = {
-    //   name: PropTypes.string,
-    //   email: PropTypes.string,
-    //   pic: PropTypes.string
-    // }
-  
     render() {
       // const {name, email, pic, username} = this.props;
       return (
@@ -65,32 +48,14 @@ selfFriend = () => {
             <p>{this.props.data.bio}</p>
             {this.props.data.userId !== this.props.thisUser ? <button className="cardBtn" value={this.props.data.userId} onClick={
                
-                        // e => alert(e.target.value)
                         e => {
           
-                      
-                          let tempFriendsArray = []
-                          let tempFriends;
                          let friendId = e.target.value
-                         
-                         //  var ref = database.ref('users/' + e.target.value + "/friendRequests");
+       
                           
                          database.ref('users/' + friendId + "/friendRequests/" + this.props.thisUser).set({
                            "accepted": false
                            });
-         
-                         //  ref.on('value', snapshot => {
-                         //      tempFriends = snapshot.val();
-                         //      if (tempFriends !== null)  {
-                         //      // tempFriends.push(this.props.thisUser)      
-                         //      tempFriendsArray = tempFriends
-                         //    }
-                         //  });
-                          
-                      
-                         //  tempFriendsArray.push(this.props.thisUser)
-                         //  database.ref('users/' + e.target.value + '/friendRequests').set(tempFriendsArray
-                         //    );
                         
                       }
                         } className="btn blue ligthen-1">

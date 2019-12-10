@@ -62,15 +62,6 @@ e.preventDefault()
         });
    }
 
-    componentDidMount = () => {
-        // var friendRequests = this.props.data;
-        // this.setState({
-        //     FriendRequestsIds: friendRequests
-        // })
-        // this.friendRequests()
-
-    }
-
     friendRequests = () => {
   
         let data = this.props.data
@@ -94,14 +85,23 @@ e.preventDefault()
 }
 
 render() {
-    
-
-    
     return(
         <div>
             {console.log('rendering friend',this.props.friends.username)}
-        
-        {this.props.friends ?
+            <div className='UserCard'>
+          <div className='UserCardTop'>
+            <img src={this.props.friends.profile_picture} />
+          </div>
+          <div className='UserCardBottom'>
+          <p>{this.props.friends.username}</p>
+            <p>{this.props.friends.occupation}</p>
+            <p>{this.props.friends.bio}</p>
+            <p>{this.props.friends.location}</p>
+            <p>{this.props.friends.bio}</p>
+            <button  onClick={e => {this.acceptRequest(this.state.FriendRequestsData[0].userId,this.props.thisUser,e)}}className="btn">Message</button>
+          </div>
+        </div>
+        {/* {this.props.friends ?
       
             <Card style={{ width: '16rem'}}>
            <ImageHeader imageSrc={this.props.friends.profile_picture}/>
@@ -126,7 +126,7 @@ render() {
               </Card>
         
               : 
-        console.log('nada')}
+        console.log('nada')} */}
         </div>
       
    

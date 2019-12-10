@@ -147,16 +147,25 @@ this.getFriends(handle)
             {data.map(item => <UserCard updateFriendRequests ={this. updateFriendRequests} updateUser = {this.updateUser} thisUser={this.state.userId} data={item}/>)}
             </div>
             </div>
+            <div className="row">
+                <div className="col">
             <div class="row">
-            <h5>These are your <strong>FRIENDS</strong></h5>
+                <div className="col">
+            <h3>These are your <strong>FRIENDS</strong></h3>
+            </div>
+            </div>
+            <div className="row">
             {this.state.ListofFriends !== null && this.state.ListofFriends.length >= 1 ? this.state.ListofFriends.map(item => <Friends friends={item} />): console.log("nada")}
             </div>
-            <div class="row">
+            
+            <div className="col">
             <h4>These are your friend requests</h4>
        
-            <div class="container">
+           
                 <div class="row">
             {(friendData !== null && friendData.length) ? friendData.map(item => <FriendRequest getFriends={this.getFriends} thisUser={this.state.userId} data={item}/>) : console.log("nada")}
+            </div>
+          
             </div>
             </div>
             </div>
