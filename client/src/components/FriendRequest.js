@@ -25,31 +25,6 @@ class FriendRequest extends React.Component {
       "accepted": true
       });
 
-
-      let tempArray = []
-      let childData;
-      var leadsRef = database.ref('users/' + userId + "/acceptedFriends");
-
-      leadsRef.on('value', snapshot => {
-          childData = snapshot.val();
-         console.log("tempArray",childData)
-        if (childData) {
-            tempArray = childData.friendId
-        }
-        
-      });
-        if (!tempArray.includes(friendId)){
-            tempArray.push(friendId)
-        }
-        
-    
-    
-    //   for now this method will make a node for friends accepted
-    database.ref('users/' + userId +"/acceptedFriends/").set({
-        "friendId": tempArray
-        });
-
-
    }
 
    declineRequest (friendId,userId,e) {
@@ -72,7 +47,7 @@ e.preventDefault()
     }
 
     friendRequests = () => {
-  
+        console.log("ids",this.props.data)
         let data = this.props.data
         if(data === 0)
             return null 
@@ -83,8 +58,11 @@ e.preventDefault()
             var leadsRef = database.ref('users/' + data);
             leadsRef.on('value', snapshot => {
                 childData = snapshot.val();
+                console.log("do i get any data?", childData)
+                console.log("this is state",this.state.FriendRequestsData)
+               
                 friendsRequests.push(childData)
-     
+                console.log("tada", this.state.FriendRequestsData)
          })
  
          this.setState({
