@@ -104,20 +104,20 @@ render() {
         <div>
         {console.log("hi",this.props.data)}
         {console.log("hey",this.state.FriendRequestsData[0])}
-        {this.state.FriendRequestsData[0] && isAccepted !== true ?
-      
-            <Card style={{ width: '18rem'}}>
-           <ImageHeader imageSrc={this.state.FriendRequestsData[0].profile_picture}/>
-          <CardBody>
-            <h5><em>{this.state.FriendRequestsData[0].username }</em></h5>
+
+
+  {this.state.FriendRequestsData[0] && isAccepted !== true ?
+        <div className='UserCard'>
+          <div className='UserCardTop'>
+            <img src={this.state.FriendRequestsData[0].profile_picture} />
+          </div>
+          <div className='UserCardBottom'>
+          <p>{this.state.FriendRequestsData[0].username}</p>
+            <p>{this.state.FriendRequestsData[0].occupation}</p>
             <p>{this.state.FriendRequestsData[0].bio}</p>
             <p>{this.state.FriendRequestsData[0].location}</p>
-            {/* {this.props.data.hobbies.map(item => <p>Hobbies: {item}</p>)} */}
-        <p>{this.state.FriendRequestsData[0].hobbies}</p>
-            <p><strong>{this.state.FriendRequestsData[0].occupation}</strong></p>
-          </CardBody>
-          <CardFooter>
-              <div class="row">
+            <p>{this.state.FriendRequestsData[0].bio}</p>
+            <div class="row">
                   <div class="col">
               <button  onClick={e => {this.acceptRequest(this.state.FriendRequestsData[0].userId,this.props.thisUser,e)}}className="btn">Accept</button>
               </div>
@@ -125,11 +125,8 @@ render() {
               <button className="btn red darken-1" onClick={e => {this.declineRequest(this.state.FriendRequestsData[0].userId,this.props.thisUser,e)}}>Decline</button>
               </div>
               </div>
-          </CardFooter>
-              </Card>
-        
-              :
-        console.log('nada')}
+          </div>
+        </div> : console.log("nada")}
         </div>
       
    

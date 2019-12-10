@@ -87,7 +87,9 @@ e.preventDefault()
 render() {
     return(
         <div>
-            {console.log('rendering friend',this.props.friends.username)}
+            {console.log(this.props.friends)}
+            {this.props.friends ?
+          
             <div className='UserCard'>
           <div className='UserCardTop'>
             <img src={this.props.friends.profile_picture} />
@@ -101,33 +103,10 @@ render() {
             <button  onClick={e => {this.acceptRequest(this.state.FriendRequestsData[0].userId,this.props.thisUser,e)}}className="btn">Message</button>
           </div>
         </div>
-        {/* {this.props.friends ?
-      
-            <Card style={{ width: '16rem'}}>
-           <ImageHeader imageSrc={this.props.friends.profile_picture}/>
-          <CardBody>
-            <h5><em>{this.props.friends.username }</em></h5>
-            <p>{this.props.friends.bio}</p>
-            <p>{this.props.friends.location}</p>
-            {this.props.friends.hobbies.map(item => <p>Hobbies: {item}</p>)} 
-        <p>{this.props.friends.hobbies}</p>
-            <p><strong>{this.props.friends.occupation}</strong></p>
-          </CardBody>
-          <CardFooter>
-              <div class="row">
-                  <div class="col">
-              <button  onClick={e => {this.acceptRequest(this.state.FriendRequestsData[0].userId,this.props.thisUser,e)}}className="btn">Message</button>
-              </div>
-              <div class="col">
-             
-              </div>
-              </div>
-          </CardFooter>
-              </Card>
         
-              : 
-        console.log('nada')} */}
-        </div>
+        : console.log('nada')
+    }
+        </div> 
       
    
     )

@@ -50,9 +50,9 @@ class Users extends React.Component {
                 Friends: data
             })
            console.log("handle2",this.state.Friends[0])
-            if (data) {
+            if (this.state.Friends) {
            
-            this.getListofFriends(data)
+            this.getListofFriends(this.state.Friends[0])
             
         }
         });
@@ -160,12 +160,9 @@ this.getFriends(handle)
             
             <div className="col">
             <h4>These are your friend requests</h4>
-       
-           
                 <div class="row">
             {(friendData !== null && friendData.length) ? friendData.map(item => <FriendRequest getFriends={this.getFriends} thisUser={this.state.userId} data={item}/>) : console.log("nada")}
             </div>
-          
             </div>
             </div>
             </div>
