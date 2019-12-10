@@ -4,6 +4,8 @@ import firebaseConfig from '../firebaseConfig'
 import Firebase from "../Firebase"
 import UserCard from "./UserCard"
 import FriendRequest from "./FriendRequest"
+import Friends from "./Friends"
+
 
 var database = Firebase.database();
 
@@ -12,7 +14,9 @@ class Users extends React.Component {
         childData: "",
         userId: "",
         user: null,
-        FriendRequests: ""
+        FriendRequests: "",
+        Friends: "",
+        ListofFriends: ""
     }
 
     updateFriendRequests = (userId) => {
@@ -26,6 +30,34 @@ class Users extends React.Component {
         });
     }
 
+
+    getFriends = (userId) => {
+        let FriendsData;
+ 
+        var ref = database.ref('users/' + userId + '/acceptedFriends');
+        ref.on('value', snapshot => {
+         FriendsData = snapshot.val();
+
+         let data = []
+            if (FriendsData !== null) {
+         Object.values(FriendsData).forEach(value=>{
+           
+             data.push(value)
+          });
+        }
+         console.log("handle",data)
+            this.setState({
+                Friends: data
+            })
+           console.log("handle2",this.state.Friends[0])
+            if (data) {
+           
+            this.getListofFriends(data)
+            
+        }
+        });
+
+    }
    
     updateUser = (userId) => {
         this.setState({
@@ -46,11 +78,40 @@ class Users extends React.Component {
       
     }
 
+    getListofFriends = (friendIdArray) => {
+        for (var i=0; i < friendIdArray.length; i++) {
+            let tempArray;
+            if (this.state.ListofFriends) {
+                tempArray = this.state.ListofFriends
+            }
+            else if (!this.state.ListofFriends) {
+                tempArray = []
+            }
+            
+    
+            let childData;
+           var leadsRef = database.ref('users/' + friendIdArray[i]);
+           leadsRef.on('value', snapshot => {
+               childData = snapshot.val();
+               console.log("aha",childData)
+               tempArray.push(childData)
+               this.setState({
+                ListofFriends: tempArray
+             
+           });
+
+        })
+        }
+     
+    }
+
     componentDidMount() {
      
         const { handle } = this.props.match.params
 
              this.setState({userId:handle})
+            
+this.getFriends(handle)
 
           this.retrieve()
     }
@@ -58,7 +119,7 @@ class Users extends React.Component {
 
     render() {
         let data = []
-        console.log("WWW",this.state.childData)
+
         Object.values(this.state.childData).forEach(value=>{
           
             data.push(value)
@@ -67,12 +128,10 @@ class Users extends React.Component {
          let friendData = []
 
          if (this.state.FriendRequests) {
-         console.log("hhh",this.state.FriendRequests)
-
+       
          Object.keys(this.state.FriendRequests).forEach(key=>{
-           console.log("ooo",key)
             friendData.push(key)
-            console.log("this is being passed down",data);
+          
          });
         }
         // friendData.push(this.state.FriendRequests)
@@ -82,19 +141,22 @@ class Users extends React.Component {
             <div>
                  <div className="container">
             <div className="row">
-            <h3>These are all the users in the app</h3>
+            <h3>Let's find that friend!</h3>
+            </div>
+            <div className="row">
             {data.map(item => <UserCard updateFriendRequests ={this. updateFriendRequests} updateUser = {this.updateUser} thisUser={this.state.userId} data={item}/>)}
             </div>
             </div>
             <div class="row">
-            <h4>These are your <strong>FRIENDS</strong></h4>
+            <h5>These are your <strong>FRIENDS</strong></h5>
+            {this.state.ListofFriends !== null && this.state.ListofFriends.length >= 1 ? this.state.ListofFriends.map(item => <Friends friends={item} />): console.log("nada")}
             </div>
             <div class="row">
             <h4>These are your friend requests</h4>
-            {console.log('this is what is being sent', friendData)}
+       
             <div class="container">
                 <div class="row">
-            {(friendData !== null && friendData.length) ? friendData.map(item => <FriendRequest thisUser={this.state.userId} data={item}/>) : console.log("nada")}
+            {(friendData !== null && friendData.length) ? friendData.map(item => <FriendRequest getFriends={this.getFriends} thisUser={this.state.userId} data={item}/>) : console.log("nada")}
             </div>
             </div>
             </div>

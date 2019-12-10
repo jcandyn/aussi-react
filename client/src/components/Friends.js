@@ -5,7 +5,7 @@ import Firebase from "../Firebase"
 import { Card, ImageHeader, CardBody, CardFooter } from 'react-simple-card';
 
 var database = Firebase.database()
-class FriendRequest extends React.Component {
+class Friends extends React.Component {
   
    constructor(props) {
     super(props);
@@ -49,7 +49,7 @@ class FriendRequest extends React.Component {
         "friendId": tempArray
         });
 
-this.props.getFriends(friendId)
+this.props.getFriends()
    }
 
    declineRequest (friendId,userId,e) {
@@ -67,7 +67,7 @@ e.preventDefault()
         // this.setState({
         //     FriendRequestsIds: friendRequests
         // })
-        this.friendRequests()
+        // this.friendRequests()
 
     }
 
@@ -94,41 +94,38 @@ e.preventDefault()
 }
 
 render() {
-    let isAccepted;
-    var leadsRef = database.ref('users/' + this.props.thisUser + "/friendRequests/" + this.props.data + "/accepted");
-    leadsRef.on('value', snapshot => {
-        isAccepted = snapshot.val();
- })
+    
+
     
     return(
         <div>
-        {console.log("hi",this.props.data)}
-        {console.log("hey",this.state.FriendRequestsData[0])}
-        {this.state.FriendRequestsData[0] && isAccepted !== true ?
+            {console.log('rendering friend',this.props.friends.username)}
+        
+        {this.props.friends ?
       
-            <Card style={{ width: '18rem'}}>
-           <ImageHeader imageSrc={this.state.FriendRequestsData[0].profile_picture}/>
+            <Card style={{ width: '16rem'}}>
+           <ImageHeader imageSrc={this.props.friends.profile_picture}/>
           <CardBody>
-            <h5><em>{this.state.FriendRequestsData[0].username }</em></h5>
-            <p>{this.state.FriendRequestsData[0].bio}</p>
-            <p>{this.state.FriendRequestsData[0].location}</p>
-            {/* {this.props.data.hobbies.map(item => <p>Hobbies: {item}</p>)} */}
-        <p>{this.state.FriendRequestsData[0].hobbies}</p>
-            <p><strong>{this.state.FriendRequestsData[0].occupation}</strong></p>
+            <h5><em>{this.props.friends.username }</em></h5>
+            <p>{this.props.friends.bio}</p>
+            <p>{this.props.friends.location}</p>
+            {this.props.friends.hobbies.map(item => <p>Hobbies: {item}</p>)} 
+        <p>{this.props.friends.hobbies}</p>
+            <p><strong>{this.props.friends.occupation}</strong></p>
           </CardBody>
           <CardFooter>
               <div class="row">
                   <div class="col">
-              <button  onClick={e => {this.acceptRequest(this.state.FriendRequestsData[0].userId,this.props.thisUser,e)}}className="btn">Accept</button>
+              <button  onClick={e => {this.acceptRequest(this.state.FriendRequestsData[0].userId,this.props.thisUser,e)}}className="btn">Message</button>
               </div>
               <div class="col">
-              <button className="btn red darken-1" onClick={e => {this.declineRequest(this.state.FriendRequestsData[0].userId,this.props.thisUser,e)}}>Decline</button>
+             
               </div>
               </div>
           </CardFooter>
               </Card>
         
-              :
+              : 
         console.log('nada')}
         </div>
       
@@ -137,4 +134,4 @@ render() {
 }
 
 }
-export default FriendRequest
+export default Friends;
