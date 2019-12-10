@@ -1,17 +1,16 @@
 import moment from 'moment'
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import ReactLoading from 'react-loading'
 import 'react-toastify/dist/ReactToastify.css'
-import {myFirestore, myStorage} from '../../Firebase'
+import { myFirestore, myStorage } from '../../Firebase'
 // import Firebase from "../Firebase";
 // import withFirebaseAuth from 'react-with-firebase-auth'
 // import * as firebase from 'firebase';
 // import 'firebase/auth';
 // import firebaseConfig from '../firebaseConfig';
-
-import images from '../Themes/Images'
 import './ChatBoard.css'
-import {AppString} from './../Const'
+import images from '../Themes/Images'
+import { AppString } from './../Const'
 
 export default class ChatBoard extends Component {
     constructor(props) {
@@ -37,7 +36,7 @@ export default class ChatBoard extends Component {
 
     componentDidMount() {
         // For first render, it's not go through componentWillReceiveProps
-        this.getListHistory()
+        // this.getListHistory()
     }
 
     componentWillUnmount() {
@@ -49,52 +48,53 @@ export default class ChatBoard extends Component {
     componentWillReceiveProps(newProps) {
         if (newProps.currentPeerUser) {
             this.currentPeerUser = newProps.currentPeerUser
-            this.getListHistory()
+            // this.getListHistory()
         }
     }
 
-    getListHistory = () => {
-        if (this.removeListener) {
-            this.removeListener()
-        }
-        this.listMessage.length = 0
-        this.setState({isLoading: true})
-        if (
-            this.hashString(this.currentUserId) <=
-            this.hashString(this.currentPeerUser.id)
-        ) {
-            this.groupChatId = `${this.currentUserId}-${this.currentPeerUser.id}`
-        } else {
-            this.groupChatId = `${this.currentPeerUser.id}-${this.currentUserId}`
-        }
+    // getListHistory = () => {
+    //     if (this.removeListener) {
+    //         this.removeListener()
+    //     }
+    //     this.listMessage.length = 0
+    //     this.setState({ isLoading: true })
+        // if (
+        //     this.hashString(this.currentUserId) <=
+        //     this.hashString(this.currentPeerUser.id)
+        // ) {
+        //     this.groupChatId = `${this.currentUserId}-${this.currentPeerUser.id}`
+        // } 
+        // else {
+        //     this.groupChatId = `${this.currentPeerUser.id}-${this.currentUserId}`
+        // }
 
         // Get history and listen new data added
-        this.removeListener = myFirestore
-            .collection(AppString.NODE_MESSAGES)
-            .doc(this.groupChatId)
-            .collection(this.groupChatId)
-            .onSnapshot(
-                snapshot => {
-                    snapshot.docChanges().forEach(change => {
-                        if (change.type === AppString.DOC_ADDED) {
-                            this.listMessage.push(change.doc.data())
-                        }
-                    })
-                    this.setState({isLoading: false})
-                },
-                err => {
-                    this.props.showToast(0, err.toString())
-                }
-            )
-    }
+    //     this.removeListener = myFirestore
+    //         .collection(AppString.NODE_MESSAGES)
+    //         .doc(this.groupChatId)
+    //         .collection(this.groupChatId)
+    //         .onSnapshot(
+    //             snapshot => {
+    //                 snapshot.docChanges().forEach(change => {
+    //                     if (change.type === AppString.DOC_ADDED) {
+    //                         this.listMessage.push(change.doc.data())
+    //                     }
+    //                 })
+    //                 this.setState({ isLoading: false })
+    //             },
+    //             err => {
+    //                 this.props.showToast(0, err.toString())
+    //             }
+    //         )
+    // }
 
     openListSticker = () => {
-        this.setState({isShowSticker: !this.state.isShowSticker})
+        this.setState({ isShowSticker: !this.state.isShowSticker })
     }
 
     onSendMessage = (content, type) => {
         if (this.state.isShowSticker && type === 2) {
-            this.setState({isShowSticker: false})
+            this.setState({ isShowSticker: false })
         }
 
         if (content.trim() === '') {
@@ -120,59 +120,11 @@ export default class ChatBoard extends Component {
             .doc(timestamp)
             .set(itemMessage)
             .then(() => {
-                this.setState({inputValue: ''})
+                this.setState({ inputValue: '' })
             })
             .catch(err => {
                 this.props.showToast(0, err.toString())
             })
-    }
-
-    onChoosePhoto = event => {
-        if (event.target.files && event.target.files[0]) {
-            this.setState({isLoading: true})
-            this.currentPhotoFile = event.target.files[0]
-            // Check this file is an image?
-            const prefixFiletype = event.target.files[0].type.toString()
-            if (prefixFiletype.indexOf(AppString.PREFIX_IMAGE) === 0) {
-                this.uploadPhoto()
-            } else {
-                this.setState({isLoading: false})
-                this.props.showToast(0, 'This file is not an image')
-            }
-        } else {
-            this.setState({isLoading: false})
-        }
-    }
-
-    uploadPhoto = () => {
-        if (this.currentPhotoFile) {
-            const timestamp = moment()
-                .valueOf()
-                .toString()
-
-            const uploadTask = myStorage
-                .ref()
-                .child(timestamp)
-                .put(this.currentPhotoFile)
-
-            uploadTask.on(
-                AppString.UPLOAD_CHANGED,
-                null,
-                err => {
-                    this.setState({isLoading: false})
-                    this.props.showToast(0, err.message)
-                },
-                () => {
-                    uploadTask.snapshot.ref.getDownloadURL().then(downloadURL => {
-                        this.setState({isLoading: false})
-                        this.onSendMessage(downloadURL, 1)
-                    })
-                }
-            )
-        } else {
-            this.setState({isLoading: false})
-            this.props.showToast(0, 'File is null')
-        }
     }
 
     onKeyboardPress = event => {
@@ -192,21 +144,21 @@ export default class ChatBoard extends Component {
             <div className="viewChatBoard">
                 {/* Header */}
                 <div className="headerChatBoard">
-                    <img
+                    {/* <img
                         className="viewAvatarItem"
                         src={this.currentPeerUser.photoUrl}
                         alt="icon avatar"
-                    />
-                    <span className="textHeaderChatBoard">
+                    /> */}
+                    {/* <span className="textHeaderChatBoard">
             {this.currentPeerUser.nickname}
-          </span>
+          </span> */}
                 </div>
 
                 {/* List message */}
                 <div className="viewListContentChat">
                     {this.renderListMessage()}
                     <div
-                        style={{float: 'left', clear: 'both'}}
+                        style={{ float: 'left', clear: 'both' }}
                         ref={el => {
                             this.messagesEnd = el
                         }}
@@ -246,16 +198,16 @@ export default class ChatBoard extends Component {
                         placeholder="Type your message..."
                         value={this.state.inputValue}
                         onChange={event => {
-                            this.setState({inputValue: event.target.value})
+                            this.setState({ inputValue: event.target.value })
                         }}
                         onKeyPress={this.onKeyboardPress}
                     />
-                    {/* <img
+                    <img
                         className="icSend"
                         src={images.ic_send}
                         alt="icon send"
                         onClick={() => this.onSendMessage(this.state.inputValue, 0)}
-                    /> */}
+                    />
                 </div>
 
                 {/* Loading */}
@@ -319,16 +271,16 @@ export default class ChatBoard extends Component {
                                             className="peerAvatarLeft"
                                         />
                                     ) : (
-                                        <div className="viewPaddingLeft"/>
-                                    )}
+                                            <div className="viewPaddingLeft" />
+                                        )}
                                     <div className="viewItemLeft">
                                         <span className="textContentItem">{item.content}</span>
                                     </div>
                                 </div>
                                 {this.isLastMessageLeft(index) ? (
                                     <span className="textTimeLeft">
-                    {moment(Number(item.timestamp)).format('ll')}
-                  </span>
+                                        {moment(Number(item.timestamp)).format('ll')}
+                                    </span>
                                 ) : null}
                             </div>
                         )
@@ -343,8 +295,8 @@ export default class ChatBoard extends Component {
                                             className="peerAvatarLeft"
                                         />
                                     ) : (
-                                        <div className="viewPaddingLeft"/>
-                                    )}
+                                            <div className="viewPaddingLeft" />
+                                        )}
                                     <div className="viewItemLeft2">
                                         <img
                                             className="imgItemLeft"
@@ -355,8 +307,8 @@ export default class ChatBoard extends Component {
                                 </div>
                                 {this.isLastMessageLeft(index) ? (
                                     <span className="textTimeLeft">
-                    {moment(Number(item.timestamp)).format('ll')}
-                  </span>
+                                        {moment(Number(item.timestamp)).format('ll')}
+                                    </span>
                                 ) : null}
                             </div>
                         )
@@ -371,8 +323,8 @@ export default class ChatBoard extends Component {
                                             className="peerAvatarLeft"
                                         />
                                     ) : (
-                                        <div className="viewPaddingLeft"/>
-                                    )}
+                                            <div className="viewPaddingLeft" />
+                                        )}
                                     <div className="viewItemLeft3" key={item.timestamp}>
                                         <img
                                             className="imgItemLeft"
@@ -383,8 +335,8 @@ export default class ChatBoard extends Component {
                                 </div>
                                 {this.isLastMessageLeft(index) ? (
                                     <span className="textTimeLeft">
-                    {moment(Number(item.timestamp)).format('ll')}
-                  </span>
+                                        {moment(Number(item.timestamp)).format('ll')}
+                                    </span>
                                 ) : null}
                             </div>
                         )
@@ -396,11 +348,11 @@ export default class ChatBoard extends Component {
             return (
                 <div className="viewWrapSayHi">
                     <span className="textSayHi">Say hi to new friend</span>
-                    {/* <img
+                    <img
                         className="imgWaveHand"
                         src={images.ic_wave_hand}
                         alt="wave hand"
-                    /> */}
+                    />
                 </div>
             )
         }
@@ -409,7 +361,7 @@ export default class ChatBoard extends Component {
     renderStickers = () => {
         return (
             <div className="viewStickers">
-                {/* <img
+                <img
                     className="imgSticker"
                     src={images.mimi1}
                     alt="sticker"
@@ -462,7 +414,7 @@ export default class ChatBoard extends Component {
                     src={images.mimi9}
                     alt="sticker"
                     onClick={() => this.onSendMessage('mimi9', 2)}
-                /> */}
+                />
             </div>
         )
     }
@@ -476,30 +428,30 @@ export default class ChatBoard extends Component {
         return hash
     }
 
-    // getGifImage = value => {
-    //     switch (value) {
-    //         case 'mimi1':
-    //             return images.mimi1
-    //         case 'mimi2':
-    //             return images.mimi2
-    //         case 'mimi3':
-    //             return images.mimi3
-    //         case 'mimi4':
-    //             return images.mimi4
-    //         case 'mimi5':
-    //             return images.mimi5
-    //         case 'mimi6':
-    //             return images.mimi6
-    //         case 'mimi7':
-    //             return images.mimi7
-    //         case 'mimi8':
-    //             return images.mimi8
-    //         case 'mimi9':
-    //             return images.mimi9
-    //         default:
-    //             return null
-    //     }
-    // }
+    getGifImage = value => {
+        switch (value) {
+            case 'mimi1':
+                return images.mimi1
+            case 'mimi2':
+                return images.mimi2
+            case 'mimi3':
+                return images.mimi3
+            case 'mimi4':
+                return images.mimi4
+            case 'mimi5':
+                return images.mimi5
+            case 'mimi6':
+                return images.mimi6
+            case 'mimi7':
+                return images.mimi7
+            case 'mimi8':
+                return images.mimi8
+            case 'mimi9':
+                return images.mimi9
+            default:
+                return null
+        }
+    }
 
     isLastMessageLeft(index) {
         if (

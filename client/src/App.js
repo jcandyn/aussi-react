@@ -9,29 +9,7 @@ import './App.css';
 import 'firebase/auth';
 import Users from '../src/components/Users';
 import Home from '../src/components/Home';
-import Main from "../src/components/Main/Main";
-
-import { applyMiddleware, compose, createStore } from 'redux';
-import thunk from 'redux-thunk';
-import reducer from './reducers';
-import initialState from './initial-state';
-
-import { startListeningForMessages } from './actions/messages';
-
-const middleware = [thunk];
-const enhancers = [];
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
-const store = createStore(
-  reducer,
-  initialState,
-  composeEnhancers(
-    applyMiddleware(...middleware),
-    ...enhancers
-  )
-);
-
-store.dispatch(startListeningForMessages());
+import Chat from "../src/components/Chat/Chat";
 
 class App extends React.Component {
   constructor(props) {
@@ -74,14 +52,10 @@ class App extends React.Component {
                 <About />
               </Route>
 
-              {/* <Route path="/chat">
-                <Chat />
-              </Route> */}
-
               <Route
                 exact
-                path="/main"
-                render={props => <Main showToast={this.showToast} {...props} />}
+                path="/chat"
+                render={props => <Chat showToast={this.showToast} {...props} />}
               />
 
               <Route path='/:handle' component={Users}>

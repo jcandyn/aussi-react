@@ -2,16 +2,15 @@ import React from 'react'
 import '../App.css';
 import { Card, ImageHeader, CardBody, CardFooter } from 'react-simple-card';
 import Firebase from "../Firebase"
-// import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 // import Card from 'react-bootstrap/Card';
-// import Button from 'react-bootstrap/Button';
+import Button from 'react-bootstrap/Button';
 var database = Firebase.database();
+
 class UserCard extends React.Component {
   state = {
     userId: ""
 }
-
-
 
 updateCurrentUser = () => {
 this.setState({
