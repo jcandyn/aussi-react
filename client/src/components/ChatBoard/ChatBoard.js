@@ -1,16 +1,16 @@
-import moment from 'moment'
-import React, { Component } from 'react'
-import ReactLoading from 'react-loading'
-import 'react-toastify/dist/ReactToastify.css'
-import { myFirestore, myStorage } from '../../Firebase'
-// import Firebase from "../Firebase";
-// import withFirebaseAuth from 'react-with-firebase-auth'
-// import * as firebase from 'firebase';
-// import 'firebase/auth';
+import moment from 'moment';
+import React, { Component } from 'react';
+import ReactLoading from 'react-loading';
+import 'react-toastify/dist/ReactToastify.css';
+import { myFirestore, myStorage } from '../../Firebase';
+import Firebase from "../../Firebase";
+// import withFirebaseAuth from 'react-with-firebase-auth';
+import * as firebase from 'firebase';
+import 'firebase/auth';
 // import firebaseConfig from '../firebaseConfig';
-import './ChatBoard.css'
-import images from '../Themes/Images'
-import { AppString } from './../Const'
+import './ChatBoard.css';
+import images from '../Themes/Images';
+import { AppString } from './../Const';
 
 export default class ChatBoard extends Component {
     constructor(props) {
@@ -22,7 +22,7 @@ export default class ChatBoard extends Component {
         }
         this.currentUserId = localStorage.getItem(AppString.ID)
         this.currentUserAvatar = localStorage.getItem(AppString.PHOTO_URL)
-        this.currentUserNickname = localStorage.getItem(AppString.NICKNAME)
+        // this.currentUserNickname = localStorage.getItem(AppString.NICKNAME)
         this.listMessage = []
         this.currentPeerUser = this.props.currentPeerUser
         this.groupChatId = null
@@ -52,41 +52,43 @@ export default class ChatBoard extends Component {
         }
     }
 
-    // getListHistory = () => {
-    //     if (this.removeListener) {
-    //         this.removeListener()
-    //     }
-    //     this.listMessage.length = 0
-    //     this.setState({ isLoading: true })
+    getListHistory = () => {
+        // if (this.removeListener) {
+        //     this.removeListener()
+        // }
+        // this.listMessage.length = 0;
+        // this.setState({ isLoading: true })
         // if (
         //     this.hashString(this.currentUserId) <=
         //     this.hashString(this.currentPeerUser.id)
-        // ) {
+        // ) 
+        // {
         //     this.groupChatId = `${this.currentUserId}-${this.currentPeerUser.id}`
-        // } 
+        // }
         // else {
         //     this.groupChatId = `${this.currentPeerUser.id}-${this.currentUserId}`
         // }
 
         // Get history and listen new data added
-    //     this.removeListener = myFirestore
-    //         .collection(AppString.NODE_MESSAGES)
-    //         .doc(this.groupChatId)
-    //         .collection(this.groupChatId)
-    //         .onSnapshot(
-    //             snapshot => {
-    //                 snapshot.docChanges().forEach(change => {
-    //                     if (change.type === AppString.DOC_ADDED) {
-    //                         this.listMessage.push(change.doc.data())
-    //                     }
-    //                 })
-    //                 this.setState({ isLoading: false })
-    //             },
-    //             err => {
-    //                 this.props.showToast(0, err.toString())
-    //             }
-    //         )
-    // }
+        // this.removeListener = 
+        Firebase
+            .collection(AppString.NODE_MESSAGES)
+            // .doc(this.groupChatId)
+            // .collection(this.groupChatId)
+            .onSnapshot(
+                snapshot => {
+                    snapshot.docChanges().forEach(change => {
+                        if (change.type === AppString.DOC_ADDED) {
+                            this.listMessage.push(change.doc.data())
+                        }
+                    })
+                    // this.setState({ isLoading: false })
+                },
+                // err => {
+                //     this.props.showToast(0, err.toString())
+                // }
+            )
+    }
 
     openListSticker = () => {
         this.setState({ isShowSticker: !this.state.isShowSticker })
@@ -113,10 +115,10 @@ export default class ChatBoard extends Component {
             type: type
         }
 
-        myFirestore
+        Firebase
             .collection(AppString.NODE_MESSAGES)
-            .doc(this.groupChatId)
-            .collection(this.groupChatId)
+            // .doc(this.groupChatId)
+            // .collection(this.groupChatId)
             .doc(timestamp)
             .set(itemMessage)
             .then(() => {
@@ -149,9 +151,7 @@ export default class ChatBoard extends Component {
                         src={this.currentPeerUser.photoUrl}
                         alt="icon avatar"
                     /> */}
-                    {/* <span className="textHeaderChatBoard">
-            {this.currentPeerUser.nickname}
-          </span> */}
+
                 </div>
 
                 {/* List message */}
@@ -170,22 +170,8 @@ export default class ChatBoard extends Component {
 
                 {/* View bottom */}
                 <div className="viewBottom">
-                    <img
-                        className="icOpenGallery"
-                        src={images.ic_photo}
-                        alt="icon open gallery"
-                        onClick={() => this.refInput.click()}
-                    />
-                    <input
-                        ref={el => {
-                            this.refInput = el
-                        }}
-                        accept="image/*"
-                        className="viewInputGallery"
-                        type="file"
-                        onChange={this.onChoosePhoto}
-                    />
 
+                    {/* Gif icon, when clicked displays all gifs */}
                     <img
                         className="icOpenSticker"
                         src={images.ic_sticker}
@@ -193,6 +179,7 @@ export default class ChatBoard extends Component {
                         onClick={this.openListSticker}
                     />
 
+                    {/* Message input */}
                     <input
                         className="viewInput"
                         placeholder="Type your message..."
@@ -202,6 +189,8 @@ export default class ChatBoard extends Component {
                         }}
                         onKeyPress={this.onKeyboardPress}
                     />
+
+                    {/* Send icon, when clicked submits message */}
                     <img
                         className="icSend"
                         src={images.ic_send}
@@ -209,18 +198,6 @@ export default class ChatBoard extends Component {
                         onClick={() => this.onSendMessage(this.state.inputValue, 0)}
                     />
                 </div>
-
-                {/* Loading */}
-                {this.state.isLoading ? (
-                    <div className="viewLoading">
-                        <ReactLoading
-                            type={'spin'}
-                            color={'#203152'}
-                            height={'3%'}
-                            width={'3%'}
-                        />
-                    </div>
-                ) : null}
             </div>
         )
     }

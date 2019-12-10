@@ -4,3 +4,7 @@
 
 ## Technologies used:
 ### React, Firebase, Node,js, Express.js
+
+## Check out the deployed version here:
+### https://friendship-cure.herokuapp.com/
+

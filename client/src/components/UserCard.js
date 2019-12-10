@@ -51,8 +51,7 @@ selfFriend = () => {
                         e => {
           
                          let friendId = e.target.value
-       
-                          
+      
                          database.ref('users/' + friendId + "/friendRequests/" + this.props.thisUser).set({
                            "accepted": false
                            });

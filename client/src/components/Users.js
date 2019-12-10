@@ -6,7 +6,6 @@ import UserCard from "./UserCard"
 import FriendRequest from "./FriendRequest"
 import Friends from "./Friends"
 
-
 var database = Firebase.database();
 
 class Users extends React.Component {
@@ -23,63 +22,58 @@ class Users extends React.Component {
         let FriendRequestData;
         var ref = database.ref('users/' + userId + '/friendRequests');
         ref.on('value', snapshot => {
-         FriendRequestData = snapshot.val();
+            FriendRequestData = snapshot.val();
             this.setState({
                 FriendRequests: FriendRequestData
             })
         });
     }
 
-
     getFriends = (userId) => {
         let FriendsData;
- 
+
         var ref = database.ref('users/' + userId + '/acceptedFriends');
         ref.on('value', snapshot => {
-         FriendsData = snapshot.val();
+            FriendsData = snapshot.val();
 
-         let data = []
+            let data = []
             if (FriendsData !== null) {
-         Object.values(FriendsData).forEach(value=>{
-           
-             data.push(value)
-          });
-        }
-         console.log("handle",data)
+                Object.values(FriendsData).forEach(value => {
+
+                    data.push(value)
+                });
+            }
+            console.log("handle", data)
             this.setState({
                 Friends: data
             })
-           console.log("handle2",this.state.Friends[0])
+            console.log("handle2", this.state.Friends[0])
             if (this.state.Friends) {
-           
-            this.getListofFriends(this.state.Friends[0])
-            
-        }
-        });
 
+                this.getListofFriends(this.state.Friends[0])
+            }
+        });
     }
-   
+
     updateUser = (userId) => {
         this.setState({
             userId: userId
         })
     }
 
-   retrieve = () => {
-       let childData;
-       var leadsRef = database.ref('users');
-       leadsRef.on('value', snapshot => {
-           childData = snapshot.val();
-           this.setState({
-               childData: childData
-           })
-       });
-
-      
+    retrieve = () => {
+        let childData;
+        var leadsRef = database.ref('users');
+        leadsRef.on('value', snapshot => {
+            childData = snapshot.val();
+            this.setState({
+                childData: childData
+            })
+        });
     }
 
     getListofFriends = (friendIdArray) => {
-        for (var i=0; i < friendIdArray.length; i++) {
+        for (var i = 0; i < friendIdArray.length; i++) {
             let tempArray;
             if (this.state.ListofFriends) {
                 tempArray = this.state.ListofFriends
@@ -87,90 +81,76 @@ class Users extends React.Component {
             else if (!this.state.ListofFriends) {
                 tempArray = []
             }
-            
-    
-            let childData;
-           var leadsRef = database.ref('users/' + friendIdArray[i]);
-           leadsRef.on('value', snapshot => {
-               childData = snapshot.val();
-               console.log("aha",childData)
-               tempArray.push(childData)
-               this.setState({
-                ListofFriends: tempArray
-             
-           });
 
-        })
+            let childData;
+            var leadsRef = database.ref('users/' + friendIdArray[i]);
+            leadsRef.on('value', snapshot => {
+                childData = snapshot.val();
+                console.log("aha", childData)
+                tempArray.push(childData)
+                this.setState({
+                    ListofFriends: tempArray
+                });
+            })
         }
-     
     }
 
     componentDidMount() {
-     
         const { handle } = this.props.match.params
-
-             this.setState({userId:handle})
-            
-this.getFriends(handle)
-
-          this.retrieve()
+        this.setState({ userId: handle })
+        this.getFriends(handle)
+        this.retrieve()
     }
-
 
     render() {
         let data = []
 
-        Object.values(this.state.childData).forEach(value=>{
-          
+        Object.values(this.state.childData).forEach(value => {
             data.push(value)
-         });
+        });
 
-         let friendData = []
+        let friendData = []
 
-         if (this.state.FriendRequests) {
-       
-         Object.keys(this.state.FriendRequests).forEach(key=>{
-            friendData.push(key)
-          
-         });
+        if (this.state.FriendRequests) {
+            Object.keys(this.state.FriendRequests).forEach(key => {
+                friendData.push(key)
+            });
         }
         // friendData.push(this.state.FriendRequests)
 
-     
-        return(
+
+        return (
             <div>
-                 <div className="container">
-            <div className="row">
-            <h3>Let's find that friend!</h3>
+                <div className="container">
+                    <div className="row">
+                        <h3>Let's find that friend!</h3>
+                    </div>
+                    <div className="row">
+                        {data.map(item => <UserCard updateFriendRequests={this.updateFriendRequests} updateUser={this.updateUser} thisUser={this.state.userId} data={item} />)}
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col">
+                        <div class="row">
+                            <div className="col">
+                                <h3>These are your <strong>FRIENDS</strong></h3>
+                            </div>
+                        </div>
+                        <div className="row">
+                            {this.state.ListofFriends !== null && this.state.ListofFriends.length >= 1 ? this.state.ListofFriends.map(item => <Friends friends={item} />) : console.log("nada")}
+                        </div>
+
+                        <div className="col">
+                            <h4>These are your friend requests</h4>
+                            <div class="row">
+                                {(friendData !== null && friendData.length) ? friendData.map(item => <FriendRequest getFriends={this.getFriends} thisUser={this.state.userId} data={item} />) : console.log("nada")}
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div className="row">
-            {data.map(item => <UserCard updateFriendRequests ={this. updateFriendRequests} updateUser = {this.updateUser} thisUser={this.state.userId} data={item}/>)}
-            </div>
-            </div>
-            <div className="row">
-                <div className="col">
-            <div class="row">
-                <div className="col">
-            <h3>These are your <strong>FRIENDS</strong></h3>
-            </div>
-            </div>
-            <div className="row">
-            {this.state.ListofFriends !== null && this.state.ListofFriends.length >= 1 ? this.state.ListofFriends.map(item => <Friends friends={item} />): console.log("nada")}
-            </div>
-            
-            <div className="col">
-            <h4>These are your friend requests</h4>
-                <div class="row">
-            {(friendData !== null && friendData.length) ? friendData.map(item => <FriendRequest getFriends={this.getFriends} thisUser={this.state.userId} data={item}/>) : console.log("nada")}
-            </div>
-            </div>
-            </div>
-            </div>
-            </div>
-           
-           
         )
     }
 }
 
-export default Users
+export default Users;
