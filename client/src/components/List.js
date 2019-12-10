@@ -1,9 +1,9 @@
-import React from 'react'
+import React from 'react';
 import '../App.css';
-import Firebase from "../Firebase"
-import 'bootstrap/dist/css/bootstrap.min.css';
+import Firebase from "../Firebase";
 
 var database = Firebase.database();
+
 class List extends React.Component {
   state = {
     userId: ""
@@ -13,10 +13,13 @@ class List extends React.Component {
     this.setState({
       userId: this.props.thisUser
     })
+
+    console.log("is this user?", this.props.thisUser)
+    this.props.updateUser(this.props.thisUser)
   }
 
   getFriends = () => {
-
+    this.props.updateFriendRequests(this.props.thisUser)
   }
 
   componentDidMount() {
@@ -24,14 +27,24 @@ class List extends React.Component {
     this.getFriends()
   }
 
+  selfFriend = () => {
+    alert("sorry, you are REALLY cool and everything, but you can't be your own friend!")
+  }
+
   render() {
     return (
       <div className="container">
         <div className="row">
-          <img imageSrc={this.props.data.profile_picture} />
 
-          <a><em>{this.props.data.username}</em></a>
-      
+          <img imageSrc={this.props.data.profile_picture} />
+          <h5><em>{this.props.data.username}</em></h5>
+          <p>{this.props.data.bio}</p>
+          <p>{this.props.data.location}</p>
+          {/* {this.props.data.hobbies.map(item => <p>Hobbies: {item}</p>)} */}
+          <p>{this.props.data.hobbies}</p>
+          <p><strong>{this.props.data.occupation}</strong></p>
+
+
         </div>
       </div>
     )

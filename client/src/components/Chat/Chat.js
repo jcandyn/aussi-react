@@ -12,13 +12,13 @@ import Firebase from "../../Firebase";
 // import 'firebase/auth';
 // import firebaseConfig from '../firebaseConfig';
 import List from "../List";
-import './Main.css';
 import ChatBoard from './../ChatBoard/ChatBoard';
 import { AppString } from './../Const';
+import './Chat.css';
 
 var database = Firebase.database();
 
-class Main extends Component {
+class Chat extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -34,24 +34,24 @@ class Main extends Component {
     }
 
     getListUser = async () => {
-        const result = await myFirestore.collection(AppString.NODE_USERS).get()
-        if (result.docs.length > 0) {
-            this.listUser = [...result.docs]
-        }
+        // const result = await myFirestore.collection(AppString.NODE_USERS).get()
+        // if (result.docs.length > 0) {
+        //     this.listUser = [...result.docs]
+        // }
 
-        let childData;
-        var leadsRef = database.ref('users');
-        leadsRef.on('value', snapshot => {
-            childData = snapshot.val();
-            this.setState({
-                childData: childData
-            })
-        });
+        // let childData;
+        // var leadsRef = database.ref('users');
+        // leadsRef.on('value', snapshot => {
+        //     childData = snapshot.val();
+        //     this.setState({
+        //         childData: childData
+        // })
+        // });
     }
- 
+
     componentDidMount() {
-        const { handle } = this.props.match.params
-        this.setState({ userId: handle })
+        // const { handle } = this.props.match.params
+        // this.setState({ userId: handle })
         this.getListUser();
     }
 
@@ -83,12 +83,12 @@ class Main extends Component {
                                 alt="icon avatar"
                             />
                             <div className="viewWrapContentItem">
-                                <span className="textItem">{`Nickname: ${
+                                {/* <span className="textItem">{`Nickname: ${
                                     item.data().nickname
                                     }`}</span>
                                 <span className="textItem">{`About me: ${
                                     item.data().aboutMe ? item.data().aboutMe : 'Not available'
-                                    }`}</span>
+                                    }`}</span> */}
                             </div>
                         </button>
                     )
@@ -115,22 +115,21 @@ class Main extends Component {
                 {/* Body */}
                 <div className="body">
                     <div className="viewListUser"> {this.renderListUser()}</div>
-                    <div className="viewBoard">
-                        {this.state.currentPeerUser ? (
+                    <div className="container">
+                        <div className="viewBoard">
+                            {this.state.currentPeerUser}
+
                             <ChatBoard
                                 currentPeerUser={this.state.currentPeerUser}
                                 showToast={this.props.showToast}
                             />
-                        ) : (
-                                <WelcomeBoard
-                                    currentUserNickname={this.currentUserNickname}
-                                    currentUserAvatar={this.currentUserAvatar}
-                                />
-                            )}
+                            
+                        </div>
                     </div>
                 </div>
 
                 <div>
+                <br />
                     <h3>These are all the users in the app</h3>
                     {data.map(item => <List thisUser={this.state.userId} data={item} />)}
                 </div>
@@ -138,24 +137,6 @@ class Main extends Component {
             </div>
         )
     }
-
-    // renderDialogConfirmLogout = () => {
-    //     return (
-    //         <div>
-    //             <div className="viewWrapTextDialogConfirmLogout">
-    //                 <span className="titleDialogConfirmLogout">Are you sure to logout?</span>
-    //             </div>
-    //             <div className="viewWrapButtonDialogConfirmLogout">
-    //                 <button className="btnYes" onClick={this.doLogout}>
-    //                     YES
-    //                 </button>
-    //                 <button className="btnNo" onClick={this.hideDialogConfirmLogout}>
-    //                     CANCEL
-    //                 </button>
-    //             </div>
-    //         </div>
-    //     )
-    // }
 }
 
-export default withRouter(Main);
+export default withRouter(Chat);
