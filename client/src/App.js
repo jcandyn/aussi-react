@@ -40,9 +40,9 @@ class App extends React.Component {
                 <li>
                   <Link to={`/${this.state.thisIsUser}`}>Users</Link>
                 </li>
-                <li>
+                {/* <li>
               <Link to="/message">Message</Link>
-            </li>
+            </li> */}
                 <li>
                   <Link to="/chat">Chat</Link>
                 </li>
