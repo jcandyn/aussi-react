@@ -16,7 +16,7 @@ class Banner extends React.Component {
     </div> */}
         </div>
 
-        <div class="lined-paper"><div class="top-margin"></div><div class="left-margin"></div><p>Hello, there! If you try this app and still can't even get close to making one good, lasting friendship, then don't give up...but know your problems are bigger than you thought Lol jk, then send suggestions and invite me to a cup of coffee. <br />-Joscandy</p></div>
+  <div class="lined-paper"><div class="top-margin"></div><div class="left-margin"></div><p>Hello, there! If you try this app and still can't even get close to making one good, lasting friendship, then don't give up...but know your problems are bigger than you thought Lol jk, then send suggestions and invite me to a cup of coffee. <br />-Joscandy and Jasmin</p></div>
         <br />
 
         {/* <p className="intro-paragraph">You have not earned the right to complain you can't make friends until you have completed the objectives of this interactive app. If you do all of this and still haven't even gotten close to making one good, lasting friendship, then don't give up but know your problems are bigger than you thought 😂 jk then send suggestions and invite me to a cup of coffee ☕ </p> */}

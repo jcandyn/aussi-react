@@ -221,7 +221,7 @@ body {
 	color: #874da2;
 }
 
-.App {
+.Chat {
 	display: flex;
 	align-items: stretch;
 	justify-content: center;
@@ -390,7 +390,7 @@ body {
 
 .Conversation .container {
 	flex: auto;
-	width: 22rem;
+	width: 28rem;
 	overflow-y: scroll;
 }
 
@@ -458,43 +458,6 @@ input::placeholder {
 	color: #ea6982;
 }
 
-button {
-	border: none;
-	background: transparent;
-	padding: 1rem 1.5rem 1rem 1rem;
-}
-
-.LoginForm {
-	animation: fadeIn 2s ease 0.3s;
-	z-index: 20;
-	background: linear-gradient(125deg, rgba(234, 105, 130, 0.6), rgba(135, 77, 162, 0.8));
-	position: absolute;
-	width: 100vw;
-	height: 100%;
-}
-
-.LoginForm .sign-up {
-	box-shadow: 0 0.8rem 3rem rgba(135, 77, 162, 0.6);
-	border-radius: 1rem;
-	background: #fdfbfb;
-	display: flex;
-	flex-direction: column;
-	height: 65vh;
-	width: 55vh;
-	margin: 15vh auto;
-	padding: 8vh 6vh 8vh 6vh;
-	justify-content: space-between;
-	align-items: stretch;
-}
-
-.LoginForm .sign-up h1 {
-	font-weight: 800;
-	font-size: 4.5vh;
-	margin-bottom: 3vh;
-	background: linear-gradient(90deg, #ea6982 0%, #fe9a8b 80%);
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
-}
 
 .LoginForm .sign-up .input {
 	display: block;

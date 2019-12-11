@@ -137,7 +137,7 @@ scrollWindow = () => {
 render() {
   return (
     <div>
-    {this.state.thisUser ?  <div className="App">
+    {this.state.thisUser ?  <div className="Chat">
     <Conversation
       messages={this.state.messages}
       recipient={this.state.recipient}
@@ -187,7 +187,7 @@ render ()
         placeholder="type something"
         onChange={this.onChange}
       />
-      <button id="send-button" onClick={this.props.onSubmit}>
+      <button className="btn send-button" id="send-button" onClick={this.props.onSubmit}>
         <i data-feather="send" />
       </button>
     </div>
