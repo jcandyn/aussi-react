@@ -1,69 +1,9 @@
 
-// import React, { Component } from 'react';
-// // import { database } from './firebase';
-// import Firebase from "../../Firebase"
-
-
 import React from 'react'
-// import { database } from './firebase';
 import '../Chat/Chat.css';
 import $ from 'jquery'; 
 import Firebase from "../../Firebase"
 
-// var database = Firebase.database();
-// class Chat extends Component {
-//   constructor() {
-//     super();
-
-//     this.state = {
-//       messages: [],
-//     };
-
-//     this.onAddMessage = this.onAddMessage.bind(this);
-//   }
-
-//   componentWillMount() {
-//     const messagesRef = database.ref('messages')
-//       .orderByKey()
-//       .limitToLast(100);
-
-//     messagesRef.on('child_added', snapshot => {
-//       const message = { text: snapshot.val(), id: snapshot.key };
-
-//       this.setState(prevState => ({
-//         messages: [ message, ...prevState.messages ],
-//       }));
-//     });
-//   }
-
-//   onAddMessage(event) {
-//     event.preventDefault();
-    
-//     database.ref('messages').push(this.input.value);
-    
-
-
-//     this.input.value = '';
-//   }
-
-//   render() {
-//     return (
-//         <div className="container">
-//       <form onSubmit={this.onAddMessage}>
-//         <input type="text" ref={node => this.input = node}/>
-//         <input className="btn" type="submit"/>
-//         <ul>
-//           {this.state.messages.map(message =>
-//             <li className="displayedMessages" key={message.id}>{message.text}</li>
-//           )}
-//         </ul>
-//       </form>
-//       </div>
-//     );
-//   }
-// }
-
-// export default Chat;
 var database = Firebase.database();
 
 var data = {
@@ -213,18 +153,6 @@ render() {
 }
 }
 
-// const LoginForm = props => {
-// return (
-//   <div className="LoginForm">
-//     <div className="sign-up">
-//       <h1>SIGN UP</h1>
-//       <div className="input"><input id="name" type="text" placeholder="Name" /><i data-feather="user" /></div>
-//       <div className="input"><input id="email" type="email" placeholder="Email" /><i data-feather="mail" /></div>
-//       <button onClick={props.login}>LET'S CHAT!</button>
-//     </div>
-//   </div>
-// );
-// };
 
 //Conversation
 class Conversation extends React.Component {
@@ -346,4 +274,5 @@ return (
 // ReactDOM.render(<App />, document.getElementById("app"));
 export default Chat;
 // feather.replace();
+
 

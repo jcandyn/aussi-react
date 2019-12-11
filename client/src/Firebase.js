@@ -1,6 +1,6 @@
 import * as firebase from 'firebase';
 
-const config={
+const config = {
     apiKey: "AIzaSyB0srIieo1ihFxwNY4uUtd0G4E3DrvJi80",
     authDomain: "aussi-react.firebaseapp.com",
     databaseURL: "https://aussi-react.firebaseio.com",
@@ -10,8 +10,8 @@ const config={
     appId: "1:394999599174:web:e252a32d426d82df4d3a47",
     measurementId: "G-3DMDP858FM"
 }
-const Firebase = 
-firebase.initializeApp(config)
+const Firebase =
+    firebase.initializeApp(config)
 firebase.firestore().settings({
     timestampsInSnapshots: true
 })
