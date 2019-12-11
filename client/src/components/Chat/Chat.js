@@ -53,11 +53,12 @@ constructor(props) {
 }
 
 componentWillMount() {
+  if (this.props.user) {
   this.login()
   this.setState({
     firebaseRef: database.ref(msgName),
   }, this.update);
-
+  }
 }
 
 update = () =>
@@ -135,20 +136,22 @@ scrollWindow = () => {
 
 render() {
   return (
-    <div className="App">
-      <Conversation
-        messages={this.state.messages}
-        recipient={this.state.recipient}
-        onSubmit={this.handleSubmit}
-        thisUser={this.state.thisUser}
-      />
-      <Profile
-        thisUser={this.state.thisUser}
-        prevChats={this.state.prevChats}
-        profileImage={this.state.thisUser.photo}
-      />
-     {/* {!this.state.thisUser ? <LoginForm login={this.login} /> : null} */}
-    </div>
+    <div>
+    {this.state.thisUser ?  <div className="App">
+    <Conversation
+      messages={this.state.messages}
+      recipient={this.state.recipient}
+      onSubmit={this.handleSubmit}
+      thisUser={this.state.thisUser}
+    />
+    <Profile
+      thisUser={this.state.thisUser}
+      prevChats={this.state.prevChats}
+      profileImage={this.state.thisUser.photo}
+    />
+   {/* {!this.state.thisUser ? <LoginForm login={this.login} /> : null} */}
+  </div> : <h3>Sign in to use the app</h3>}
+   </div>
   );
 }
 }
