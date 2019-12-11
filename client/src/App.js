@@ -62,13 +62,13 @@ class App extends React.Component {
                 render={props => <Chat user={this.state.thisIsUser} {...props} />}
               />
 
-<Route path='/message/:handle' component={Message}/>
-          
+              <Route path='/message/:handle' component={Message} />
+
 
               <Route path='/:handle' component={Users}>
                 {/* <Users thisUser={this.state.thisIsUser}/> */}
               </Route>
-             
+
               <Route path="/">
                 <Home thisUser={this.state.thisIsUser} whoIsThisUser={this.whoIsThisUser} />
               </Route>

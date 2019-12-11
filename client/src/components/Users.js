@@ -81,22 +81,22 @@ class Users extends React.Component {
             else if (!this.state.ListofFriends) {
                 tempArray = []
             }
-            
-    
+
+
             let childData;
-           var leadsRef = database.ref('users/' + friendIdArray[i]);
-           leadsRef.on('value', snapshot => {
-               childData = snapshot.val();
-               tempArray.push(childData)
-           
-           });
-           console.log("how about this?",tempArray)
-           this.setState({
-            ListofFriends: tempArray
-         
-        })
+            var leadsRef = database.ref('users/' + friendIdArray[i]);
+            leadsRef.on('value', snapshot => {
+                childData = snapshot.val();
+                tempArray.push(childData)
+
+            });
+            console.log("how about this?", tempArray)
+            this.setState({
+                ListofFriends: tempArray
+
+            })
+        }
     }
-}
 
     componentDidMount() {
         const { handle } = this.props.match.params
@@ -124,34 +124,34 @@ class Users extends React.Component {
 
         return (
             <div>
-                 <div className="container">
-            <div className="row">
-            <h3>Let's find that friend!</h3>
-            </div>
-            <div className="row">
-            {data.map(item => <UserCard updateFriendRequests ={this. updateFriendRequests} updateUser = {this.updateUser} thisUser={this.state.userId} data={item}/>)}
-            </div>
-            </div>
-            <div className="row">
-                <div className="col">
-            <div class="row">
-                <div className="col">
-            <h3>These are your <strong>FRIENDS</strong></h3>
-            </div>
-            </div>
-            <div className="row">
-                {console.log("this may solve it",this.state.ListofFriends)}
-            {this.state.ListofFriends !== null && this.state.ListofFriends.length >= 1 ? this.state.ListofFriends.map(item => <Friends thisUser={this.state.userId} friends={item} />): console.log("nada")}
-            </div>
-            
-            <div className="col">
-            <h4>These are your friend requests</h4>
-                <div class="row">
-            {(friendData !== null && friendData.length) ? friendData.map(item => <FriendRequest getFriends={this.getFriends} thisUser={this.state.userId} data={item}/>) : console.log("nada")}
-            </div>
-            </div>
-            </div>
-            </div>
+                <div className="container">
+                    <div className="row">
+                        <h3>Let's find that friend!</h3>
+                    </div>
+                    <div className="row">
+                        {data.map(item => <UserCard updateFriendRequests={this.updateFriendRequests} updateUser={this.updateUser} thisUser={this.state.userId} data={item} />)}
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col">
+                        <div class="row">
+                            <div className="col">
+                                <h3>These are your <strong>FRIENDS</strong></h3>
+                            </div>
+                        </div>
+                        <div className="row">
+                            {console.log("this may solve it", this.state.ListofFriends)}
+                            {this.state.ListofFriends !== null && this.state.ListofFriends.length >= 1 ? this.state.ListofFriends.map(item => <Friends thisUser={this.state.userId} friends={item} />) : console.log("nada")}
+                        </div>
+
+                        <div className="col">
+                            <h4>These are your friend requests</h4>
+                            <div class="row">
+                                {(friendData !== null && friendData.length) ? friendData.map(item => <FriendRequest getFriends={this.getFriends} thisUser={this.state.userId} data={item} />) : console.log("nada")}
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         )
     }

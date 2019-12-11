@@ -123,17 +123,16 @@ class Chat extends Component {
                                 currentPeerUser={this.state.currentPeerUser}
                                 showToast={this.props.showToast}
                             />
-                            
+
                         </div>
                     </div>
                 </div>
 
                 <div>
-                <br />
+                    <br />
                     <h3>These are all the users in the app</h3>
                     {data.map(item => <List thisUser={this.state.userId} data={item} />)}
                 </div>
-
             </div>
         )
     }

@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 // import { database } from './firebase';
 import Firebase from "../../Firebase"
@@ -24,33 +23,29 @@ class Chat extends Component {
       const message = { text: snapshot.val(), id: snapshot.key };
 
       this.setState(prevState => ({
-        messages: [ message, ...prevState.messages ],
+        messages: [message, ...prevState.messages],
       }));
     });
   }
 
   onAddMessage(event) {
     event.preventDefault();
-    
     database.ref('messages').push(this.input.value);
-    
-
-
     this.input.value = '';
   }
 
   render() {
     return (
-        <div className="container">
-      <form onSubmit={this.onAddMessage}>
-        <input type="text" ref={node => this.input = node}/>
-        <input className="btn" type="submit"/>
-        <ul>
-          {this.state.messages.map(message =>
-            <li className="displayedMessages" key={message.id}>{message.text}</li>
-          )}
-        </ul>
-      </form>
+      <div className="container">
+        <form onSubmit={this.onAddMessage}>
+          <input type="text" ref={node => this.input = node} />
+          <input className="btn" type="submit" />
+          <ul>
+            {this.state.messages.map(message =>
+              <li className="displayedMessages" key={message.id}>{message.text}</li>
+            )}
+          </ul>
+        </form>
       </div>
     );
   }
