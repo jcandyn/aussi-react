@@ -81,7 +81,7 @@ class App extends React.Component {
     );
 
     function About() {
-      return <div className="container"><h2>About</h2><h4>Loneliness is more dangerous than smoking 15 cigarettes a day, and more closely linked to our mortality than heart disease and obesity. This app is a space for people to connect. By allowing the user to filter possible friendship connections, they are able to find friends in their area who share similar interests. The app’s friend requesting, messaging and chatting features will increase the likelihood for newly-found friends to meet and hang out.</h4></div>;
+      return <div className="container userText"><h2 >About</h2><h4>Loneliness is more dangerous than smoking 15 cigarettes a day, and more closely linked to our mortality than heart disease and obesity. This app is a space for people to connect. By allowing the user to filter possible friendship connections, they are able to find friends in their area who share similar interests. The app’s friend requesting, messaging and chatting features will increase the likelihood for newly-found friends to meet and hang out.</h4></div>;
     }
   }
 }

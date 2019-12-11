@@ -92,7 +92,7 @@ class Home extends React.Component {
                 <br />
                 <br />
 
-                <p className="pink-text text-lighten-3">Hey, {user.displayName} !</p>
+                <p className="white-text text-lighten-3">Hey, {user.displayName} !</p>
                 <img src={user.photoURL} className="profile-image" />
               </div>
               :

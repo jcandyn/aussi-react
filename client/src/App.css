@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  height: 100vh;
 }
 
 html {
@@ -9,10 +10,10 @@ html {
 .App-header {
   background-color: #ffffff;
   padding-bottom: 40px ;
-  /* display: flex;
+  display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center; */
+  justify-content: center;
   font-size: calc(10px + 2vmin);
   color: #013a56;
 }
@@ -279,5 +280,10 @@ h2, h3, h4, h5 {
 
 .userText {
   color: white;
+}
+
+.react-form {
+  height: 50%;
+  margin-top: 0%;
 }
 
