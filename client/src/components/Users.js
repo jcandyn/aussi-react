@@ -93,16 +93,16 @@ class Users extends React.Component {
            var leadsRef = database.ref('users/' + friendIdArray[i]);
            leadsRef.on('value', snapshot => {
                childData = snapshot.val();
-               console.log("aha",childData)
                tempArray.push(childData)
-               this.setState({
-                ListofFriends: tempArray
-             
+           
            });
+           console.log("how about this?",tempArray)
+           this.setState({
+            ListofFriends: tempArray
+         
 
         })
         }
-     
     }
 
     componentDidMount() {
@@ -155,7 +155,8 @@ this.getFriends(handle)
             </div>
             </div>
             <div className="row">
-            {this.state.ListofFriends !== null && this.state.ListofFriends.length >= 1 ? this.state.ListofFriends.map(item => <Friends friends={item} />): console.log("nada")}
+                {console.log("this may solve it",this.state.ListofFriends)}
+            {this.state.ListofFriends !== null && this.state.ListofFriends.length >= 1 ? this.state.ListofFriends.map(item => <Friends thisUser={this.state.userId} friends={item} />): console.log("nada")}
             </div>
             
             <div className="col">
