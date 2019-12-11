@@ -22,8 +22,8 @@ class Friends extends React.Component {
     }
 
     message = (friendId, userId, e) => {
-        alert(friendId)
-        alert(userId)
+        // alert(friendId)
+        // alert(userId)
     }
 
     render() {

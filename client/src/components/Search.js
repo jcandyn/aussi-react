@@ -100,7 +100,7 @@ class Search extends React.Component {
   }
 
   updateUserObject() {
-    alert("it's updating")
+    // alert("it's updating")
     database.ref('users/' + this.props.userId).update({
       "bio": this.state.bio,
       "occupation": this.state.occupation,
