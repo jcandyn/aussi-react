@@ -1,10 +1,27 @@
+// import React from 'react'
+
+
+// class Message extends React.Component {
+
+    
+//    render() {
+//        return(
+//            <h1>hi</h1>
+//        )
+//    }
+// }
+
+// export default Message;
 
 import React, { Component } from 'react';
 // import { database } from './firebase';
-import Firebase from "../../Firebase"
+import Firebase from "../Firebase"
+
+
+
 
 var database = Firebase.database();
-class Chat extends Component {
+class Message extends Component {
   constructor() {
     super();
 
@@ -31,10 +48,8 @@ class Chat extends Component {
 
   onAddMessage(event) {
     event.preventDefault();
-    
-    database.ref('messages').push(this.input.value);
-    
 
+    database.ref('messages').push(this.input.value);
 
     this.input.value = '';
   }
@@ -44,10 +59,10 @@ class Chat extends Component {
         <div className="container">
       <form onSubmit={this.onAddMessage}>
         <input type="text" ref={node => this.input = node}/>
-        <input className="btn" type="submit"/>
+        <input type="submit"/>
         <ul>
           {this.state.messages.map(message =>
-            <li className="displayedMessages" key={message.id}>{message.text}</li>
+            <li key={message.id}>{message.text}</li>
           )}
         </ul>
       </form>
@@ -56,4 +71,4 @@ class Chat extends Component {
   }
 }
 
-export default Chat;
+export default Message;

@@ -10,6 +10,7 @@ import 'firebase/auth';
 import Users from '../src/components/Users';
 import Home from '../src/components/Home';
 import Chat from "../src/components/Chat/Chat";
+import Message from "../src/components/Message"
 
 class App extends React.Component {
   constructor(props) {
@@ -39,6 +40,9 @@ class App extends React.Component {
                 <li>
                   <Link to={`/${this.state.thisIsUser}`}>Users</Link>
                 </li>
+                {/* <li>
+              <Link to="/message">Message</Link>
+            </li> */}
                 <li>
                   <Link to="/chat">Chat</Link>
                 </li>
@@ -55,12 +59,16 @@ class App extends React.Component {
               <Route
                 exact
                 path="/chat"
-                render={props => <Chat showToast={this.showToast} {...props} />}
+                render={props => <Chat user={this.state.thisIsUser} {...props} />}
               />
+
+<Route path='/message/:handle' component={Message}/>
+          
 
               <Route path='/:handle' component={Users}>
                 {/* <Users thisUser={this.state.thisIsUser}/> */}
               </Route>
+             
               <Route path="/">
                 <Home thisUser={this.state.thisIsUser} whoIsThisUser={this.whoIsThisUser} />
               </Route>

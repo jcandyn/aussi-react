@@ -45,16 +45,17 @@ selfFriend = () => {
             <p>{this.props.data.occupation}</p>
             <p>{this.props.data.bio}</p>
             <p>{this.props.data.location}</p>
-            <p>{this.props.data.bio}</p>
             {this.props.data.userId !== this.props.thisUser ? <button className="cardBtn" value={this.props.data.userId} onClick={
                
                         e => {
           
                          let friendId = e.target.value
-      
+       
+                          if (friendId) {
                          database.ref('users/' + friendId + "/friendRequests/" + this.props.thisUser).set({
                            "accepted": false
                            });
+                          }
                         
                       }
                         } className="btn blue ligthen-1">
