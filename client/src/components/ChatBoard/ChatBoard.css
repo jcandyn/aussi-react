@@ -1,6 +1,6 @@
 /* Chat board */
 
-.viewChatBoard {
+/* .viewChatBoard {
     display: flex;
     flex: 1;
     flex-direction: column;
@@ -102,7 +102,7 @@ input::placeholder {
 
 /* View item message */
 
-.viewItemRight {
+/* .viewItemRight {
     width: 300px;
     height: auto;
     background-color: #e8e8e8;
@@ -222,10 +222,10 @@ input::placeholder {
 
 .viewPaddingLeft {
     width: 40px;
-}
+} */
 
 /* Item text */
-
+/* 
 .textContentItem {
     font-size: 14px;
     word-break: break-all;
@@ -233,10 +233,10 @@ input::placeholder {
 
 .viewListContentChat div:last-child {
     margin-bottom: 10px;
-}
+} */
 
 /* Item image */
-
+/* 
 .imgItemRight {
     object-fit: cover;
     width: 300px;
@@ -262,10 +262,10 @@ input::placeholder {
     font-size: 12px;
     font-style: italic;
     margin-left: 50px;
-}
+} */
 
 /* Stickers */
-
+/* 
 .viewStickers {
     display: flex;
     border-top: 1px solid #e8e8e8;
@@ -278,11 +278,11 @@ input::placeholder {
     width: 80px;
     height: 80px;
     object-fit: contain;
-}
+} */
 
 /* Say hi */
 
-.viewWrapSayHi {
+/* .viewWrapSayHi {
     margin-top: 20px;
     display: flex;
     flex-direction: row;
@@ -299,4 +299,4 @@ input::placeholder {
     width: 40px;
     height: 40px;
     margin-left: 10px;
-}
+}  */
