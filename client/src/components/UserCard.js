@@ -40,7 +40,7 @@ class UserCard extends React.Component {
         <div className='UserCardTop'>
           <img src={this.props.data.profile_picture} />
         </div>
-        <div className='UserCardBottom'>
+        <div className='UserCardBottom userText'>
           <p>{this.props.data.username}</p>
           <p>{this.props.data.occupation}</p>
           <p>{this.props.data.bio}</p>

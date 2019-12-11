@@ -101,7 +101,7 @@ class FriendRequest extends React.Component {
                         <div className='UserCardTop'>
                             <img src={this.state.FriendRequestsData[0].profile_picture} />
                         </div>
-                        <div className='UserCardBottom'>
+                        <div className='UserCardBottom userText'>
                             <p>{this.state.FriendRequestsData[0].username}</p>
                             <p>{this.state.FriendRequestsData[0].occupation}</p>
                             <p>{this.state.FriendRequestsData[0].bio}</p>

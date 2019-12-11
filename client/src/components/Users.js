@@ -126,7 +126,7 @@ class Users extends React.Component {
             <div>
                 <div className="container">
                     <div className="row">
-                        <h3>Let's find that friend!</h3>
+                        <h3 className="userText">Let's find that friend!</h3>
                     </div>
                     <div className="row">
                         {data.map(item => <UserCard updateFriendRequests={this.updateFriendRequests} updateUser={this.updateUser} thisUser={this.state.userId} data={item} />)}
@@ -136,7 +136,7 @@ class Users extends React.Component {
                     <div className="col">
                         <div class="row">
                             <div className="col">
-                                <h3>These are your <strong>FRIENDS</strong></h3>
+                                <h3 className="userText">These are your <strong>FRIENDS</strong></h3>
                             </div>
                         </div>
                         <div className="row">
@@ -145,7 +145,7 @@ class Users extends React.Component {
                         </div>
 
                         <div className="col">
-                            <h4>These are your friend requests</h4>
+                            <h4 className="userText">These are your friend requests</h4>
                             <div class="row">
                                 {(friendData !== null && friendData.length) ? friendData.map(item => <FriendRequest getFriends={this.getFriends} thisUser={this.state.userId} data={item} />) : console.log("nada")}
                             </div>

@@ -36,7 +36,7 @@ class Friends extends React.Component {
                         <div className='UserCardTop'>
                             <img src={this.props.friends.profile_picture} />
                         </div>
-                        <div className='UserCardBottom'>
+                        <div className='UserCardBottom userText'>
                             <p>{this.props.friends.username}</p>
                             <p>{this.props.friends.occupation}</p>
                             <p>{this.props.friends.bio}</p>
