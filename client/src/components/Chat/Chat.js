@@ -1,62 +1,349 @@
 
-import React, { Component } from 'react';
+// import React, { Component } from 'react';
+// // import { database } from './firebase';
+// import Firebase from "../../Firebase"
+
+
+import React from 'react'
 // import { database } from './firebase';
+import '../Chat/Chat.css';
+import $ from 'jquery'; 
 import Firebase from "../../Firebase"
 
+// var database = Firebase.database();
+// class Chat extends Component {
+//   constructor() {
+//     super();
+
+//     this.state = {
+//       messages: [],
+//     };
+
+//     this.onAddMessage = this.onAddMessage.bind(this);
+//   }
+
+//   componentWillMount() {
+//     const messagesRef = database.ref('messages')
+//       .orderByKey()
+//       .limitToLast(100);
+
+//     messagesRef.on('child_added', snapshot => {
+//       const message = { text: snapshot.val(), id: snapshot.key };
+
+//       this.setState(prevState => ({
+//         messages: [ message, ...prevState.messages ],
+//       }));
+//     });
+//   }
+
+//   onAddMessage(event) {
+//     event.preventDefault();
+    
+//     database.ref('messages').push(this.input.value);
+    
 
 
+//     this.input.value = '';
+//   }
 
+//   render() {
+//     return (
+//         <div className="container">
+//       <form onSubmit={this.onAddMessage}>
+//         <input type="text" ref={node => this.input = node}/>
+//         <input className="btn" type="submit"/>
+//         <ul>
+//           {this.state.messages.map(message =>
+//             <li className="displayedMessages" key={message.id}>{message.text}</li>
+//           )}
+//         </ul>
+//       </form>
+//       </div>
+//     );
+//   }
+// }
+
+// export default Chat;
 var database = Firebase.database();
-class Chat extends Component {
-  constructor() {
-    super();
 
-    this.state = {
-      messages: [],
-    };
+var data = {
+  baseURL: "https://day-7-messaging.firebaseio.com/",
+  profileImage: "https://pbs.twimg.com/media/Diz0a9BWAAEol5v.jpg",
+  messages: {},
+  prevChats: [
+    {
+      lastText: "",
+      sender: {
+        name: "Public Chatroom",
+        profileImage: "https://zephyo.github.io/22Days/code/7/graphics/users.svg"
+      }
+    },
+    {
+      lastText: "Hey, wanna get boba? 😊 I found a really cool place that u might like",
+      sender: {
+        name: "Madie 💗",
+        profileImage: "https://pbs.twimg.com/media/DiPs3H7V4AAvnmT.jpg"
+      }
+    },
+    {
+      lastText: "k I'm off to procure sustenance",
+      sender: {
+        name: "best bench",
+        profileImage: "https://pbs.twimg.com/media/Ds89x98UUAA_7xY.jpg"
+      }
+    },
+    {
+      lastText: "Lia sent a photo.",
+      sender: {
+        name: "Lia",
+        profileImage: "https://pbs.twimg.com/media/DupPZcMXgAY339e.jpg"
+      }
+    }
+  ]
+}
+var msgName = "messages"
 
-    this.onAddMessage = this.onAddMessage.bind(this);
-  }
 
-  componentWillMount() {
-    const messagesRef = database.ref('messages')
-      .orderByKey()
-      .limitToLast(100);
 
-    messagesRef.on('child_added', snapshot => {
-      const message = { text: snapshot.val(), id: snapshot.key };
+//App Container
+class Chat extends React.Component {
+constructor(props) {
+  super(props);
+  this.state = data;
+}
 
-      this.setState(prevState => ({
-        messages: [ message, ...prevState.messages ],
-      }));
+componentWillMount() {
+  this.login()
+  this.setState({
+    firebaseRef: database.ref(msgName),
+  }, this.update);
+
+}
+
+update = () =>
+{    
+
+  this.state.firebaseRef.on("value", 
+                            (snapshot) => {
+    this.setState({
+      messages: snapshot.val()
+    }, ()=>{
+      if (this.state.messages)
+     {
+         var last = Object.keys(this.state.messages)[Object.keys(this.state.messages).length-1];
+        var prev = this.state.prevChats;
+        prev[0].lastText =  this.state.messages[last].message;
+       this.setState({
+         prevChats: prev
+       });
+        this.scrollWindow();
+     }
     });
+  });
+}
+
+login = () => {
+  let userName;
+  let photo;
+  var leadsRef = database.ref('users/' + this.props.user);
+  leadsRef.on('value', snapshot => {
+    let childData = snapshot.val();
+   console.log("tempArray",childData)
+  userName = childData.username
+  photo = childData.profile_picture
+});
+
+
+  var user = {
+    name: userName,
+    photo: photo
+  };
+  if (user.name) {
+    this.setState({ thisUser: user });
   }
+};
 
-  onAddMessage(event) {
-    event.preventDefault();
+handleSubmit = () => {
+  var value = $(".messageInput").val();
+  if (value.length === 0) {
     
-    database.ref('messages').push(this.input.value);
-    
-
-
-    this.input.value = '';
+    return;
   }
+  var message = {
+    sender: this.state.thisUser,
+    message: value
+  };
 
-  render() {
-    return (
-        <div className="container">
-      <form onSubmit={this.onAddMessage}>
-        <input type="text" ref={node => this.input = node}/>
-        <input className="btn" type="submit"/>
-        <ul>
-          {this.state.messages.map(message =>
-            <li className="displayedMessages" key={message.id}>{message.text}</li>
-          )}
-        </ul>
-      </form>
-      </div>
-    );
+  this.postMessage(message);
+  $(".messageInput").val("");
+};
+
+postMessage(message) {
+  // Get a key for a new Post.
+  var newPostRef = this.state.firebaseRef.push();
+
+  newPostRef.set(message, this.scrollWindow);
+}
+
+scrollWindow = () => {
+  var windowHeight = $(".Messages").height();
+  $(".container").animate(
+    { scrollTop: $(".container")[0].scrollHeight },
+    500
+  );
+}
+
+render() {
+  return (
+    <div className="App">
+      <Conversation
+        messages={this.state.messages}
+        recipient={this.state.recipient}
+        onSubmit={this.handleSubmit}
+        thisUser={this.state.thisUser}
+      />
+      <Profile
+        thisUser={this.state.thisUser}
+        prevChats={this.state.prevChats}
+        profileImage={this.state.thisUser.photo}
+      />
+     {/* {!this.state.thisUser ? <LoginForm login={this.login} /> : null} */}
+    </div>
+  );
+}
+}
+
+// const LoginForm = props => {
+// return (
+//   <div className="LoginForm">
+//     <div className="sign-up">
+//       <h1>SIGN UP</h1>
+//       <div className="input"><input id="name" type="text" placeholder="Name" /><i data-feather="user" /></div>
+//       <div className="input"><input id="email" type="email" placeholder="Email" /><i data-feather="mail" /></div>
+//       <button onClick={props.login}>LET'S CHAT!</button>
+//     </div>
+//   </div>
+// );
+// };
+
+//Conversation
+class Conversation extends React.Component {
+ constructor(props) {
+  super(props);
+}
+
+onChange = () => {
+  if ($('.messageInput').val().length > 0){
+    $('#send-button').css({
+      "background":"#fad0c4" });
+  }else{
+     $('#send-button').css({
+      "background":"white" });
   }
 }
 
+render ()
+ { return (
+    <div className="Conversation">
+      <Header name="Public Chatroom" />
+      <div className="container">
+        <Messages messages={this.props.messages} thisUser={this.props.thisUser} />
+      </div>
+      <input
+        className="messageInput"
+        name="message"
+        type="text"
+        placeholder="type something"
+        onChange={this.onChange}
+      />
+      <button id="send-button" onClick={this.props.onSubmit}>
+        <i data-feather="send" />
+      </button>
+    </div>
+  );
+}
+}
+
+//Profile
+var Profile = props => {
+var prevchats = props.prevChats.map(function(chat, i) {
+  return <PastChat lastText={chat.lastText} sender={chat.sender} />;
+});
+return (
+  <div className="Profile">
+    <div className="top-half">
+    <h1>{props.thisUser ? props.thisUser.name : ""} </h1>
+    {/* <p className="email">{props.thisUser ? props.thisUser.email : ""}</p> */}
+    <img className="profileImage main" src={props.profileImage} />
+    <div className="icons">
+      <a href="#"><i data-feather="alert-circle" /></a>
+       <a href="#" className="active"><i data-feather="message-circle" /></a>
+       <a href="#"><i data-feather="home" /></a>
+       <a href="#"><i data-feather="activity" /></a>
+    </div>
+    </div>
+    <div className="prev-chats">{prevchats}</div>
+  </div>
+);
+};
+
+var PastChat = props => {
+return (
+  <div className="prev-chat">
+    <img className="profileImage" src={props.sender.profileImage} />
+    <h2>{props.sender.name}</h2>
+    <p>{props.lastText}</p>
+  </div>
+);
+};
+
+//Header
+var Header = props => {
+return (
+  <header>
+    <i data-feather="chevron-left" />
+    <div className="name">{props.name}</div>
+  </header>
+);
+};
+
+
+//Messages
+var Messages = props => {
+let messages=[];
+for (var key in props.messages){
+  var message = props.messages[key];
+  messages.push(
+     <Message
+      message={message.message}
+      sender={message.sender}
+      thisUser={props.thisUser}
+    />
+  );
+}
+
+return <div className="Messages">{messages}</div>;
+};
+
+//Message
+var Message = props => {
+var classNames = "";
+if (props.thisUser && props.sender.name == props.thisUser.name) {
+  classNames = "Message you";
+} else {
+  classNames = "Message them";
+}
+
+return (
+    <div className={classNames}>
+    <span>{props.message}</span>
+    <p>{props.sender.name}</p>
+  </div>
+);
+};
+
+//Render
+// ReactDOM.render(<App />, document.getElementById("app"));
 export default Chat;
+// feather.replace();
+
