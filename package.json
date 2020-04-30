@@ -34,7 +34,7 @@
     "express": "^4.17.1",
     "firebase": "^7.4.0",
     "if-env": "^1.0.4",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "lodash": "^4.17.15",
     "materialize-css": "^1.0.0-rc.2",
     "mongoose": "^5.7.11",
